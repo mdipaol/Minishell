@@ -6,14 +6,14 @@
 #    By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/17 13:45:50 by mdi-paol          #+#    #+#              #
-#    Updated: 2023/03/17 17:01:01 by mdi-paol         ###   ########.fr        #
+#    Updated: 2023/03/27 18:44:55 by mdi-paol         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 LIBFT = libft/libft.a
 GNL = Get_Next_Line/get_next_line.c Get_Next_Line/get_next_line_utils.c
-SRC = main.c
+SRC = main.c split.c quote_manager.c
 FLAGS = -Wall -Werror -Wextra -g
 
 all : $(NAME)
