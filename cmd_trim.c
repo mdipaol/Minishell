@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   split.c                                            :+:      :+:    :+:   */
+/*   cmd_trim.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:38:36 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/03/27 18:56:40 by mdi-paol         ###   ########.fr       */
+/*   Updated: 2023/03/28 10:40:40 by mdi-paol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,10 @@ char	**ft_cmdtrim(char *s, char c)
 void	ft_split_all(t_data *data, char *s)
 {
 	if (!ft_check_quote(s))
+	{
 		data->cmd_trim = ft_cmdtrim(s, ' ');
+		data->expand = ft_expand(data);
+	}
 	else
 		data->split_error = 1;
 	//printf("%s", s);
