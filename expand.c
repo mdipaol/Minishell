@@ -6,7 +6,7 @@
 /*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 10:14:33 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/03/28 12:18:17 by mdi-paol         ###   ########.fr       */
+/*   Updated: 2023/03/28 12:34:13 by mdi-paol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_create_str_var(t_data *data)
 {
-	
+	ciao come va?
 }
 
 int	ft_search_var(t_data *data)
