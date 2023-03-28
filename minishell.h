@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: marvin@42.fr <alegreci>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:34:35 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/03/28 10:23:37 by mdi-paol         ###   ########.fr       */
+/*   Updated: 2023/03/28 18:12:09 by marvin@42.f      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,3 +30,4 @@ int	quote_skipper(char *s, int start);
 char	*quote_inserter(char *s, int start);
 int	ft_check_quote(char *s);
 char **ft_expand(t_data *data);
+char	**ft_cmdsubsplit(char **s);
