@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quote_manager.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin@42.fr <alegreci>                    +#+  +:+       +#+        */
+/*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 18:38:22 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/03/28 11:58:35 by marvin@42.f      ###   ########.fr       */
+/*   Updated: 2023/03/28 12:02:16 by mdi-paol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ int	ft_check_quote(char *s)
 				write(1, "Error: unmatched quotes\n", 24);
 				return (1);
 			}
-
 		}
 		i++;
 	}

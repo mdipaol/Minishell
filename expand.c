@@ -3,16 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin@42.fr <alegreci>                    +#+  +:+       +#+        */
+/*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 10:14:33 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/03/28 12:00:00 by marvin@42.f      ###   ########.fr       */
+/*   Updated: 2023/03/28 12:18:17 by mdi-paol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-
+void	ft_create_str_var(t_data *data)
+{
+	
+}
 
 int	ft_search_var(t_data *data)
 {
@@ -39,6 +42,6 @@ char	**ft_expand(t_data *data)
 	int	i;
 
 	i = ft_search_var(data);
-	ft_creat_str_var(data);
+	ft_create_str_var(data);
 	printf("%d", i);
 }
