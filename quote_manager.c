@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quote_manager.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: marvin@42.fr <alegreci>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 18:38:22 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/03/28 11:42:17 by mdi-paol         ###   ########.fr       */
+/*   Updated: 2023/03/28 11:58:35 by marvin@42.f      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,27 @@
 
 int	ft_check_quote(char *s)
 {
-	int	i;
-	int	count_s;
-	int	count_db;
+	int		i;
+	char	c;
 
-	count_db = 0;
-	count_s = 0;
 	i = 0;
 	while (s[i])
 	{
-		if (s[i] == '\"')
-			count_db++;
-		if (s[i] == '\'')
-			count_s++;
+		if (s[i] == '\"' || s[i] == '\'')
+		{
+			c = s[i++];
+			while (s[i] != c && s[i])
+				i++;
+			if (!s[i])
+			{
+				write(1, "Error: unmatched quotes\n", 24);
+				return (1);
+			}
+
+		}
 		i++;
 	}
-	if (count_db % 2 != 0 || count_s % 2 != 0 )
-	{
-		write(1, "Error: unmatched quotes\n", 24);
-		return(1);
-	}
-	else
-		return(0);
+	return (0);
 }
 
 int	quote_skipper(char *s, int start)

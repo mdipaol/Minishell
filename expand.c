@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: marvin@42.fr <alegreci>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 10:14:33 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/03/28 11:50:01 by mdi-paol         ###   ########.fr       */
+/*   Updated: 2023/03/28 12:00:00 by marvin@42.f      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@ int	ft_search_var(t_data *data)
 	while (data->cmd_trim[i])
 	{
 		j = 0;
-		while(data->cmd_trim[i][j])
+		while (data->cmd_trim[i][j])
 		{
 			if (data->cmd_trim[i][j] == '$' && data->cmd_trim[i][j + 1])
-				return(i);
+				return (i);
 			j++;
 		}
 		i++;
