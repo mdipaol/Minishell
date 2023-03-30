@@ -6,7 +6,7 @@
 /*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:38:36 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/03/28 10:40:40 by mdi-paol         ###   ########.fr       */
+/*   Updated: 2023/03/30 18:30:13 by mdi-paol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ char	**ft_cmdtrim_helper(char *s, int i, int b, char **final)
 	return (final);
 }
 
-char	**ft_cmdtrim(char *s, char c)
+char	**ft_cmdtrim(t_data *data, char *s, char c)
 {
 	char	**final;
 	int		i;
@@ -106,6 +106,7 @@ char	**ft_cmdtrim(char *s, char c)
 
 	b = 0;
 	i = 0;
+	data->count_word = word_counter(s, c, i, 0);
 	final = malloc(sizeof(char *) * (word_counter(s, c, i, 0) + 1));
 	final = ft_cmdtrim_helper(s, i, b, final);
 	return (final);
@@ -115,12 +116,13 @@ void	ft_split_all(t_data *data, char *s)
 {
 	if (!ft_check_quote(s))
 	{
-		data->cmd_trim = ft_cmdtrim(s, ' ');
-		data->expand = ft_expand(data);
+		data->cmd_trim = ft_cmdtrim(data, s, ' ');
+		if (ft_check_expand(s, "$?"))
+			data->expand = ft_expand(data);
 	}
 	else
 		data->split_error = 1;
 	//printf("%s", s);
-/* 	for(int i = 0; data->cmd_trim[i]; i++)
-		printf("%s\n", data->cmd_trim[i]); */
+	for(int i = 0; data->cmd_trim[i]; i++)
+		printf("%s\n", data->cmd_trim[i]);
 }

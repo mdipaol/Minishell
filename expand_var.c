@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expand.c                                           :+:      :+:    :+:   */
+/*   expand_var.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 10:14:33 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/03/28 19:19:45 by mdi-paol         ###   ########.fr       */
+/*   Updated: 2023/03/30 19:02:49 by mdi-paol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,41 +26,49 @@ int	ft_check_first_c(t_data *data, char *check, int i, int j)
 	return(1);
 }
 
-void	ft_expand_arg(t_data *data, char *s)
+void	ft_expand_arg(t_data *data, char *s, int index)
 {
 	int	i;
 	int	j;
 	int	x;
+	int k;
 	char *arg;
 
-	arg = getenv(s);
+	arg = ft_strdup(getenv(s));
 	i = 0;
 	x = 0;
-	printf("%s", arg);
-	/* while (data->cmd_trim[i])
+	k = 0;
+	data->expand = malloc(sizeof(char *) * data->count_word + 1);
+	while (data->cmd_trim[i])
 	{
 		j = 0;
-		while(data->cmd_trim[i][j])
+		if (index == i && arg != NULL)
 		{
-			if (data->cmd_trim[i][j] != '$')
+			data->expand[i] = malloc(sizeof(char) * ft_strlen(data->cmd_trim[i]) + ft_strlen(arg) - ft_strlen(s) + 1);
+			while(data->cmd_trim[i][j])
 			{
-				data->expand[i][j] = data->cmd_trim[i][j];
-				j++;
-			}
-			else
-			{
-				j--;
-				while(arg[x])
+				if (data->cmd_trim[i][j] != '$')
 				{
-					data->expand[i][j] = arg[x];
-					x++;
+					data->expand[i][j] = data->cmd_trim[i][k];
+					j++;
+					k++;
+				}
+				else
+				{
+					while(arg[x])
+					{
+						data->expand[i][j] = arg[x];
+						x++;
+						j++;
+					}
+					k += ft_strlen(s) + 1;
 				}
 			}
 		}
+		else
+			data->expand[i] = data->cmd_trim[i];
 		i++;
 	}
-	for(int u = 0; data->expand[u]; u++)
-		printf("%s\n", data->expand[u]); */
 }
 
 void	ft_create_str_var(t_data *data, int i)
@@ -71,7 +79,7 @@ void	ft_create_str_var(t_data *data, int i)
 
 	j = 0;
 	x = 0;
-	s = malloc(sizeof(char) * ft_strlen(data->cmd_trim[i]) - i);
+	s = malloc(sizeof(char) * ft_strlen_var(data->cmd_trim[i], "|\"\'$?>< ") + 1);
 	while (data->cmd_trim[i][j])
 	{
 		if (data->cmd_trim[i][j] == '$' && data->cmd_trim[i][j + 1])
@@ -88,7 +96,8 @@ void	ft_create_str_var(t_data *data, int i)
 		}
 		j++;
 	}
-	ft_expand_arg(data, s);
+	s[x] = '\0';
+	ft_expand_arg(data, s, i);
 }
 
 int	ft_search_var(t_data *data)
