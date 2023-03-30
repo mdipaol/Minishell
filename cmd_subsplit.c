@@ -6,11 +6,65 @@
 /*   By: marvin@42.fr <alegreci>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 17:36:04 by marvin@42.f       #+#    #+#             */
-/*   Updated: 2023/03/28 19:25:56 by marvin@42.f      ###   ########.fr       */
+/*   Updated: 2023/03/30 18:58:27 by marvin@42.f      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+char	*ft_strchr_quote(const char *s, int c)
+{
+	int		i;
+	char	*a;
+
+	a = (char *)s;
+	i = 0;
+	while (a[i] != '\0')
+	{
+		if (a[i] == '\'' || a[i] == '\"')
+			i = quote_skipper((char *)s, i);
+		if (a[i] == c)
+			return (&a[i]);
+		i++;
+	}
+	if (c == '\0')
+		return (&a[i]);
+	return (NULL);
+}
+
+int	ft_string_splitter(char **final, int j, char *s)
+{
+	int		i;
+	char	*tmp;
+	int		start;
+
+	i = 0;
+	while (s[i])
+	{
+		start = i;
+		while (s[i] && s[i] != '|' && s[i] != '>' && s[i] != '<')
+			i++;
+		if (i - start != 0)
+		{
+			tmp = malloc(sizeof(char) * (i - start) + 1);
+			tmp[i - start] = '\0';
+			i = start;
+			start = 0;
+			while (s[i] && s[i] != '|' && s[i] != '>' && s[i] != '<')
+				tmp[start++] = s[i++];
+			final[j] = tmp;
+			j++;
+		}
+		while (s[i] == '|' || s[i] == '>' || s[i] == '<')
+		{
+			final[j] = malloc(sizeof(char) * 2);
+			final[j][0] = s[i++];
+			final[j++][1] = '\0';
+		}
+	}
+	free(s);
+	return (j);
+}
 
 int	ft_wcounter(char **s, int i, int j)
 {
@@ -45,15 +99,15 @@ char	**ft_cmdsubsplit(char **s)
 	final = malloc(sizeof(char *) * ft_wcounter(s, i, j) + 1);
 	while (s[i])
 	{
-		if (!ft_strchr(s[i],'|') && !ft_strchr(s[i],'>') && !ft_strchr(s[i],'<'))
+		if (!ft_strchr_quote(s[i],'|') && !ft_strchr_quote(s[i],'>') && !ft_strchr_quote(s[i],'<'))
 		{
 			final[j] = s[i];
 			j++;
 		}
 		else
-			j = //funione che mette le stringhe;
-
+			j = ft_string_splitter(final, j, s[i]);
+		i++;
 	}
-
+	final[j] = NULL;
 	return (final);
 }
