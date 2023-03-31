@@ -6,7 +6,7 @@
 /*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 10:14:33 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/03/30 19:02:49 by mdi-paol         ###   ########.fr       */
+/*   Updated: 2023/03/31 12:36:31 by mdi-paol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	ft_expand_arg(t_data *data, char *s, int index)
 	char *arg;
 
 	arg = ft_strdup(getenv(s));
+	if (arg == NULL)
 	i = 0;
 	x = 0;
 	k = 0;
