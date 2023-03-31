@@ -6,14 +6,14 @@
 #    By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/17 13:45:50 by mdi-paol          #+#    #+#              #
-#    Updated: 2023/03/30 17:35:36 by mdi-paol         ###   ########.fr        #
+#    Updated: 2023/03/31 21:13:51 by mdi-paol         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 LIBFT = libft/libft.a
 GNL = Get_Next_Line/get_next_line.c Get_Next_Line/get_next_line_utils.c
-SRC = main.c cmd_trim.c quote_manager.c expand_var.c utils1.c
+SRC = main.c cmd_trim.c quote_manager.c expand_var.c utils1.c cmd_subsplit.c
 FLAGS = -Wall -Werror -Wextra -g
 
 all : $(NAME)
@@ -25,7 +25,7 @@ lf:
 	@make bonus -sC libft
 
 ps:
-			gcc $(SRC) $(LIBFT) $(GNL) -lreadline -g -o $(NAME)
+			gcc $(FLAGS) $(SRC) $(LIBFT) $(GNL) -lreadline -g -o $(NAME)
 			@echo "\033[1;32m✅ Compiled ✅\033[0m"
 
 clean :		libclean

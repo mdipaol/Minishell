@@ -6,7 +6,7 @@
 /*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:38:36 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/03/30 18:30:13 by mdi-paol         ###   ########.fr       */
+/*   Updated: 2023/03/31 21:19:45 by mdi-paol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ char	**ft_cmdtrim_helper(char *s, int i, int b, char **final)
 			i = quote_skipper(s, i);
 			flag = 0;
 		}
-		if (s[i] != ' ' && flag == 0)
+		if (s[i] != ' ' && flag == 0 && s[i])
 		{
 			final[b] = word_creator(s, ' ', i);
 			b++;
@@ -119,10 +119,11 @@ void	ft_split_all(t_data *data, char *s)
 		data->cmd_trim = ft_cmdtrim(data, s, ' ');
 		if (ft_check_expand(s, "$?"))
 			data->expand = ft_expand(data);
+		data->cmd_trim = ft_cmdsubsplit(data->cmd_trim);
+		//data->expand = ft_expand(data);
 	}
 	else
 		data->split_error = 1;
-	//printf("%s", s);
-	for(int i = 0; data->cmd_trim[i]; i++)
-		printf("%s\n", data->cmd_trim[i]);
+   	for(int i = 0; data->expand[i]; i++)
+		printf("%s\n", data->expand[i]);
 }

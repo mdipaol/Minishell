@@ -6,7 +6,7 @@
 /*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 10:14:33 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/03/31 12:36:31 by mdi-paol         ###   ########.fr       */
+/*   Updated: 2023/03/31 21:20:05 by mdi-paol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,10 @@ void	ft_expand_arg(t_data *data, char *s, int index)
 
 	arg = ft_strdup(getenv(s));
 	if (arg == NULL)
+	{
+		data->expand = data->cmd_trim;
+		return;
+	}
 	i = 0;
 	x = 0;
 	k = 0;
@@ -43,7 +47,7 @@ void	ft_expand_arg(t_data *data, char *s, int index)
 	while (data->cmd_trim[i])
 	{
 		j = 0;
-		if (index == i && arg != NULL)
+		if (index == i)
 		{
 			data->expand[i] = malloc(sizeof(char) * ft_strlen(data->cmd_trim[i]) + ft_strlen(arg) - ft_strlen(s) + 1);
 			while(data->cmd_trim[i][j])
@@ -118,6 +122,7 @@ int	ft_search_var(t_data *data)
 		}
 		i++;
 	}
+	return(i);
 }
 
 char	**ft_expand(t_data *data)
@@ -126,5 +131,6 @@ char	**ft_expand(t_data *data)
 
 	i = ft_search_var(data);
 	ft_create_str_var(data, i);
+	return(data->expand);
 	//printf("%d", i);
 }

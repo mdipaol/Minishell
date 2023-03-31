@@ -6,7 +6,7 @@
 /*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:34:35 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/03/30 18:05:54 by mdi-paol         ###   ########.fr       */
+/*   Updated: 2023/03/31 21:01:08 by mdi-paol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,3 +33,4 @@ int	ft_check_quote(char *s);
 char **ft_expand(t_data *data);
 int	ft_check_expand(char *s, char *check);
 int	ft_strlen_var(char *s, char *check);
+char	**ft_cmdsubsplit(char **s);
