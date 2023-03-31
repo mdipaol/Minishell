@@ -6,7 +6,7 @@
 /*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:16:21 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/03/27 18:44:30 by mdi-paol         ###   ########.fr       */
+/*   Updated: 2023/03/31 21:14:36 by mdi-paol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	ft_initialize(t_data *data)
 	data->split_error = 0;
 }
 
-int	main(int argc, char **argv)
+int	main(void)
 {
 	t_data	data;
 	char	*s;
@@ -36,8 +36,8 @@ int	main(int argc, char **argv)
 	{
 		s = readline("\033[0;96mminishem: \033[0m");
 		add_history(s);
-
 		ft_split_all(&data, s);
 	}
+	return(0);
 }
 

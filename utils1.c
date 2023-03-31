@@ -1,47 +1,64 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expand.c                                           :+:      :+:    :+:   */
+/*   utils1.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/28 10:14:33 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/03/28 12:34:13 by mdi-paol         ###   ########.fr       */
+/*   Created: 2023/03/30 17:31:34 by mdi-paol          #+#    #+#             */
+/*   Updated: 2023/03/31 21:29:14 by mdi-paol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_create_str_var(t_data *data)
+int	ft_strlen_var(char *s, char *check)
 {
-	ciao come va?
-}
-
-int	ft_search_var(t_data *data)
-{
-	int		i;
-	int		j;
-	char	*var;
+	int	i;
+	int	j;
+	int	count;
 
 	i = 0;
-	while (data->cmd_trim[i])
+	count = 0;
+	while (s[i])
+	{
+		if (s[i] == '$')
+		{
+			i++;
+			while(s[i])
+			{
+				j = 0;
+				while(check[j])
+				{
+					if(s[i] == check[j])
+						return(count);
+					j++;
+				}
+				count++;
+				i++;
+			}
+		}
+		i++;
+	}
+	return(count);
+}
+
+int	ft_check_expand(char *s, char *check)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while(s[i])
 	{
 		j = 0;
-		while (data->cmd_trim[i][j])
+		while (check[j])
 		{
-			if (data->cmd_trim[i][j] == '$' && data->cmd_trim[i][j + 1])
-				return (i);
+			if (s[i] == check[j])
+				return(1);
 			j++;
 		}
 		i++;
 	}
-}
-
-char	**ft_expand(t_data *data)
-{
-	int	i;
-
-	i = ft_search_var(data);
-	ft_create_str_var(data);
-	printf("%d", i);
+	return(0);
 }
