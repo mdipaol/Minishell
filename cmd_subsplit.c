@@ -6,7 +6,7 @@
 /*   By: marvin@42.fr <alegreci>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 17:36:04 by marvin@42.f       #+#    #+#             */
-/*   Updated: 2023/03/30 18:58:27 by marvin@42.f      ###   ########.fr       */
+/*   Updated: 2023/04/03 11:34:37 by marvin@42.f      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,20 @@ char	*ft_strchr_quote(const char *s, int c)
 	return (NULL);
 }
 
-int	ft_string_splitter(char **final, int j, char *s)
+int	special_char_putter(char **final, int i, int j, char *s)
 {
-	int		i;
+	final[j] = malloc(sizeof(char) * 2);
+	final[j][0] = s[i];
+	final[j][1] = '\0';
+	i++;
+	return (i);
+}
+
+int	ft_string_splitter(char **final, int j, char *s, int i)
+{
 	char	*tmp;
 	int		start;
 
-	i = 0;
 	while (s[i])
 	{
 		start = i;
@@ -52,15 +59,10 @@ int	ft_string_splitter(char **final, int j, char *s)
 			start = 0;
 			while (s[i] && s[i] != '|' && s[i] != '>' && s[i] != '<')
 				tmp[start++] = s[i++];
-			final[j] = tmp;
-			j++;
+			final[j++] = tmp;
 		}
 		while (s[i] == '|' || s[i] == '>' || s[i] == '<')
-		{
-			final[j] = malloc(sizeof(char) * 2);
-			final[j][0] = s[i++];
-			final[j++][1] = '\0';
-		}
+			i = special_char_putter(final, i, j++, s);
 	}
 	free(s);
 	return (j);
@@ -99,13 +101,14 @@ char	**ft_cmdsubsplit(char **s)
 	final = malloc(sizeof(char *) * ft_wcounter(s, i, j) + 1);
 	while (s[i])
 	{
-		if (!ft_strchr_quote(s[i],'|') && !ft_strchr_quote(s[i],'>') && !ft_strchr_quote(s[i],'<'))
+		if (!ft_strchr_quote(s[i], '|')
+			&& !ft_strchr_quote(s[i], '>') && !ft_strchr_quote(s[i], '<'))
 		{
 			final[j] = s[i];
 			j++;
 		}
 		else
-			j = ft_string_splitter(final, j, s[i]);
+			j = ft_string_splitter(final, j, s[i], 0);
 		i++;
 	}
 	final[j] = NULL;
