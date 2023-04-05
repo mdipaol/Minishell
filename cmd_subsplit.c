@@ -68,25 +68,32 @@ int	ft_string_splitter(char **final, int j, char *s, int i)
 	return (j);
 }
 
-int	ft_wcounter(char **s, int i, int j)
+int	ft_wcounter(char **s, int i, int count, int flag)
 {
-	int	count;
+	int	j;
 
-	count = 0;
 	while (s[i])
 	{
 		j = 0;
 		while (s[i][j])
 		{
+			if (s[i][j] != '|' && s[i][j] != '>' && s[i][j] != '<' && flag == 1)
+			{
+				count++;
+				flag = 0;
+			}
 			if (s[i][j] == '\"' || s[i][j] == '\'')
 				j = quote_skipper(s[i], j);
 			if (s[i][j] == '|' || s[i][j] == '>' || s[i][j] == '<')
+			{
 				count++;
+				flag = 1;
+			}
 			j++;
 		}
 		i++;
+		flag = 1;
 	}
-	count += i;
 	return (count);
 }
 
@@ -98,7 +105,7 @@ char	**ft_cmdsubsplit(char **s)
 
 	i = 0;
 	j = 0;
-	final = malloc(sizeof(char *) * ft_wcounter(s, i, j) + 1);
+	final = malloc(sizeof(char *) * ft_wcounter(s, i, j, 1) + 1);
 	while (s[i])
 	{
 		if (!ft_strchr_quote(s[i], '|')

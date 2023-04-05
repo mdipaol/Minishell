@@ -81,10 +81,10 @@ char	**ft_cmdtrim_helper(char *s, int i, int b, char **final)
 		{
 			final[b] = quote_inserter(s, i);
 			b++;
-			i = quote_skipper(s, i);
+			i = quote_skipper(s, i) - 1;
 			flag = 0;
 		}
-		if (s[i] != ' ' && flag == 0 && s[i])
+		else if (s[i] != ' ' && flag == 0 && s[i])
 		{
 			final[b] = word_creator(s, ' ', i);
 			b++;
