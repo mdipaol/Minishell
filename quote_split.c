@@ -6,7 +6,7 @@
 /*   By: marvin@42.fr <alegreci>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 14:50:44 by marvin@42.f       #+#    #+#             */
-/*   Updated: 2023/04/03 16:24:42 by marvin@42.f      ###   ########.fr       */
+/*   Updated: 2023/04/13 12:14:21 by marvin@42.f      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,19 +19,7 @@ char	*quote_remover(char *s)
 	int		q;
 	char	c;
 
-	i = 0;
-	q = 0;
-	while (s[i])
-	{
-		if (s[i] == '\"' || s[i] == '\'')
-		{
-			i = quote_skipper(s, i);
-			q += 2;
-		}
-		else
-			i++;
-	}
-	removed = malloc(sizeof(char) * (ft_strlen(s) - q + 1));
+	removed = malloc(sizeof(char) * (ft_strlen(s) - 1));
 	i = 0;
 	q = 0;
 	while (s[i])

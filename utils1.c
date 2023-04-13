@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils1.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: marvin@42.fr <alegreci>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 17:31:34 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/03/31 21:33:27 by mdi-paol         ###   ########.fr       */
+/*   Updated: 2023/04/13 12:17:42 by marvin@42.f      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,13 @@ int	ft_strlen_var(char *s, char *check)
 		if (s[i] == '$')
 		{
 			i++;
-			while(s[i])
+			while (s[i])
 			{
 				j = 0;
-				while(check[j])
+				while (check[j])
 				{
-					if(s[i] == check[j])
-						return(count);
+					if (s[i] == check[j])
+						return (count);
 					j++;
 				}
 				count++;
@@ -40,7 +40,7 @@ int	ft_strlen_var(char *s, char *check)
 		}
 		i++;
 	}
-	return(count);
+	return (count);
 }
 
 int	ft_check_expand(char *s, char *check)
@@ -49,16 +49,16 @@ int	ft_check_expand(char *s, char *check)
 	int	j;
 
 	i = 0;
-	while(s[i])
+	while (s[i])
 	{
 		j = 0;
 		while (check[j])
 		{
 			if (s[i] == check[j])
-				return(1);
+				return (1);
 			j++;
 		}
 		i++;
 	}
-	return(0);
+	return (0);
 }
