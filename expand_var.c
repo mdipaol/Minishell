@@ -6,7 +6,7 @@
 /*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 10:14:33 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/04/19 18:52:39 by mdi-paol         ###   ########.fr       */
+/*   Updated: 2023/04/20 17:10:04 by mdi-paol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,58 +14,53 @@
 
 char *ft_fill_var(char *var, char *s, char *check)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (s[i])
 	{
 		if (ft_strchr(check, s[i]))
-			break;
+			break ;
 		var[i] = s[i];
 		i++;
 	}
 	var[i] = '\0';
-	return(var);
+	return (var);
 }
 
-char *ft_final_fill(char *original, char *new, int dollar, char *var)
+char	*ft_final_fill(char *original, char *new, int dollar, char *var)
 {
 	int	i;
 	int	k;
 	int	j;
+	int	flag;
 
 	i = 0;
 	j = 0;
 	k = 0;
+	flag = 0;
 	while (original[i])
 	{
-		if (original[i] != '$')
-			new[j] = original[i];
+		if (original[i] != '$' || flag)
+			new[j++] = original[i++];
 		if (i == dollar)
 		{
-			while(var[k])
-			{
-				new[j] = var[k];
-				j++;
-				k++;
-			}
+			while (var[k])
+				new[j++] = var[k++];
 			i += ft_strlen_var(original + i + 1, "|\"\'$?>< ") + 1;
-		}
-		else
-		{
-			i++;
-			j++;
+			flag = 1;
 		}
 	}
-	return(new);
+	return (new);
 }
 
 int	ft_create_str_var(t_data *data, int i, int j)
 {
-	char *var;
-	char *s;
+	char	*var;
+	char	*s;
 
-	var = malloc(sizeof(char) * ft_strlen_var(data->cmd_trim[i] + j + 1, "|\"\'$?>< ") + 1);
+	var = malloc(sizeof(char) * \
+	ft_strlen_var(data->cmd_trim[i] + j + 1, "|\"\'$?>< ") + 1);
 	var = ft_fill_var(var, data->cmd_trim[i] + j + 1, "|\"\'$?>< ");
 	var = getenv(var);
 	if (!var)
@@ -73,10 +68,11 @@ int	ft_create_str_var(t_data *data, int i, int j)
 		var = malloc(1);
 		var[0] = '\0';
 	}
-	s = malloc(sizeof(char) * ft_strlen(var) + ft_strlen(data->cmd_trim[i]) - ft_strlen_var(data->cmd_trim[i] + j + 1, "|\"\'$?>< "));
+	s = malloc(sizeof(char) * ft_strlen(var) + ft_strlen(data->cmd_trim[i]) - \
+	ft_strlen_var(data->cmd_trim[i] + j + 1, "|\"\'$?>< "));
 	data->cmd_trim[i] = ft_final_fill(data->cmd_trim[i], s, j, var);
-	j += ft_strlen_var(data->cmd_trim[i] + j + 1, "|\"\'$?>< ") + 1;
-	return(j);
+	j += ft_strlen_var(data->cmd_trim[i] + j + 1, "|\"\'$?>< ");
+	return (j);
 }
 
 char	**ft_expand(t_data *data)
@@ -89,7 +85,7 @@ char	**ft_expand(t_data *data)
 	while (data->cmd_trim[i])
 	{
 		j = 0;
-		while(data->cmd_trim[i][j])
+		while (data->cmd_trim[i][j])
 		{
 			if (data->cmd_trim[i][j] == '$')
 				j = ft_create_str_var(data, i, j);
@@ -97,6 +93,5 @@ char	**ft_expand(t_data *data)
 		}
 		i++;
 	}
-	return(data->cmd_trim);
-	//printf("%d", i);
+	return (data->cmd_trim);
 }
