@@ -6,131 +6,97 @@
 /*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 10:14:33 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/03/31 21:20:05 by mdi-paol         ###   ########.fr       */
+/*   Updated: 2023/04/19 18:52:39 by mdi-paol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_check_first_c(t_data *data, char *check, int i, int j)
+char *ft_fill_var(char *var, char *s, char *check)
 {
-	int	x;
+	int i;
 
-	x = 0;
-	while (check[x])
+	i = 0;
+	while (s[i])
 	{
-		if (data->cmd_trim[i][j] == check[x])
-			return(0);
-		x++;
+		if (ft_strchr(check, s[i]))
+			break;
+		var[i] = s[i];
+		i++;
 	}
-	return(1);
+	var[i] = '\0';
+	return(var);
 }
 
-void	ft_expand_arg(t_data *data, char *s, int index)
+char *ft_final_fill(char *original, char *new, int dollar, char *var)
 {
 	int	i;
+	int	k;
 	int	j;
-	int	x;
-	int k;
-	char *arg;
 
-	arg = ft_strdup(getenv(s));
-	if (arg == NULL)
-	{
-		data->expand = data->cmd_trim;
-		return;
-	}
 	i = 0;
-	x = 0;
+	j = 0;
 	k = 0;
-	data->expand = malloc(sizeof(char *) * data->count_word + 1);
-	while (data->cmd_trim[i])
+	while (original[i])
 	{
-		j = 0;
-		if (index == i)
+		if (original[i] != '$')
+			new[j] = original[i];
+		if (i == dollar)
 		{
-			data->expand[i] = malloc(sizeof(char) * ft_strlen(data->cmd_trim[i]) + ft_strlen(arg) - ft_strlen(s) + 1);
-			while(data->cmd_trim[i][j])
+			while(var[k])
 			{
-				if (data->cmd_trim[i][j] != '$')
-				{
-					data->expand[i][j] = data->cmd_trim[i][k];
-					j++;
-					k++;
-				}
-				else
-				{
-					while(arg[x])
-					{
-						data->expand[i][j] = arg[x];
-						x++;
-						j++;
-					}
-					k += ft_strlen(s) + 1;
-				}
+				new[j] = var[k];
+				j++;
+				k++;
 			}
+			i += ft_strlen_var(original + i + 1, "|\"\'$?>< ") + 1;
 		}
 		else
-			data->expand[i] = data->cmd_trim[i];
-		i++;
+		{
+			i++;
+			j++;
+		}
 	}
+	return(new);
 }
 
-void	ft_create_str_var(t_data *data, int i)
+int	ft_create_str_var(t_data *data, int i, int j)
 {
-	int	j;
+	char *var;
 	char *s;
-	int	x;
 
-	j = 0;
-	x = 0;
-	s = malloc(sizeof(char) * ft_strlen_var(data->cmd_trim[i], "|\"\'$?>< ") + 1);
-	while (data->cmd_trim[i][j])
+	var = malloc(sizeof(char) * ft_strlen_var(data->cmd_trim[i] + j + 1, "|\"\'$?>< ") + 1);
+	var = ft_fill_var(var, data->cmd_trim[i] + j + 1, "|\"\'$?>< ");
+	var = getenv(var);
+	if (!var)
 	{
-		if (data->cmd_trim[i][j] == '$' && data->cmd_trim[i][j + 1])
-		{
-			j++;
-			if (!ft_check_first_c(data, "|\"\'$?>< ", i, j))
-				break;
-			while (ft_check_first_c(data, "|\"\'$?>< ", i, j) && data->cmd_trim[i][j])
-			{
-				s[x] = data->cmd_trim[i][j];
-				x++;
-				j++;
-			}
-		}
-		j++;
+		var = malloc(1);
+		var[0] = '\0';
 	}
-	s[x] = '\0';
-	ft_expand_arg(data, s, i);
-}
-
-int	ft_search_var(t_data *data)
-{
-	int		i;
-	int		j;
-
-	i = 0;
-	while (data->cmd_trim[i])
-	{
-		j = 0;
-		while (data->cmd_trim[i][j])
-		{
-			if (data->cmd_trim[i][j] == '$' && data->cmd_trim[i][j + 1])
-				return (i);
-			j++;
-		}
-		i++;
-	}
-	return(i);
+	s = malloc(sizeof(char) * ft_strlen(var) + ft_strlen(data->cmd_trim[i]) - ft_strlen_var(data->cmd_trim[i] + j + 1, "|\"\'$?>< "));
+	data->cmd_trim[i] = ft_final_fill(data->cmd_trim[i], s, j, var);
+	j += ft_strlen_var(data->cmd_trim[i] + j + 1, "|\"\'$?>< ") + 1;
+	return(j);
 }
 
 char	**ft_expand(t_data *data)
 {
 	int	i;
+	int	j;
 
-	i = ft_search_var(data);
-	ft_create_str_var(data, i);
-	return(data->expand);
+	i = 0;
+	j = 0;
+	while (data->cmd_trim[i])
+	{
+		j = 0;
+		while(data->cmd_trim[i][j])
+		{
+			if (data->cmd_trim[i][j] == '$')
+				j = ft_create_str_var(data, i, j);
+			j++;
+		}
+		i++;
+	}
+	return(data->cmd_trim);
 	//printf("%d", i);
 }

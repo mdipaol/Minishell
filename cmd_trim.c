@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_trim.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin@42.fr <alegreci>                    +#+  +:+       +#+        */
+/*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:38:36 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/04/03 14:50:06 by marvin@42.f      ###   ########.fr       */
+/*   Updated: 2023/04/19 18:14:01 by mdi-paol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,10 +117,10 @@ void	ft_split_all(t_data *data, char *s)
 	if (!ft_check_quote(s))
 	{
 		data->cmd_trim = ft_cmdtrim(data, s, ' ');
-		if (ft_check_expand(s, "$?"))
+		if (ft_strchr(s, '$'))
 			data->cmd_trim = ft_expand(data);
-		data->cmd_trim = ft_cmdsubsplit(data->cmd_trim);
-		data->cmd_trim = ft_quote_split(data->cmd_trim);
+/* 		data->cmd_trim = ft_cmdsubsplit(data->cmd_trim);
+		data->cmd_trim = ft_quote_split(data->cmd_trim); */
 	}
 	else
 		data->split_error = 1;
