@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_trim.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: alegreci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:38:36 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/04/20 16:36:35 by mdi-paol         ###   ########.fr       */
+/*   Updated: 2023/04/24 16:21:14 by alegreci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,7 @@ void	ft_split_all(t_data *data, char *s)
 			data->cmd_trim = ft_expand(data);
 		data->cmd_trim = ft_cmdsubsplit(data->cmd_trim);
 		data->cmd_trim = ft_quote_split(data->cmd_trim);
+		data->cmds = ft_fill_nodes(data);
 	}
 	else
 		data->split_error = 1;
