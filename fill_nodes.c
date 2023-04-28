@@ -6,11 +6,35 @@
 /*   By: alegreci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 16:22:15 by alegreci          #+#    #+#             */
-/*   Updated: 2023/04/24 18:38:15 by alegreci         ###   ########.fr       */
+/*   Updated: 2023/04/28 11:40:17 by alegreci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	ft_all_cmd_init(char ***all, int n, char **trim)
+{
+	int	i;
+	int	j;
+	int	k;
+
+	i = 0;
+	j = 0;
+	all[n] = NULL;
+	while (i < n)
+	{
+		k = 0;
+		while (trim[j] && trim[j][0] != '|')
+		{
+			k++;
+			j++;
+		}
+		all[i] = malloc(sizeof(char *) * (k + 1));
+		all[i][k] = NULL;
+		i++;
+		j++;
+	}
+}
 
 char	***ft_fill_all_cmd(char ***all, int n, char **trim)
 {
@@ -20,7 +44,6 @@ char	***ft_fill_all_cmd(char ***all, int n, char **trim)
 
 	i = 0;
 	j = 0;
-	all[n] = NULL;
 	while (i < n)
 	{
 
@@ -32,11 +55,12 @@ char	***ft_fill_all_cmd(char ***all, int n, char **trim)
 			j++;
 		}
 		i++;
+		j++;
 	}
 	return (all);
 }
 
-void	ft_node_init(t_cmd **head, int n)
+void	ft_node_init(t_cmd **head, int n, char ***all_cmd)
 {
 	int		i;
 	t_cmd	*tmp;
@@ -45,7 +69,8 @@ void	ft_node_init(t_cmd **head, int n)
 	*head = malloc(sizeof(t_cmd));
 	tmp = *head;
 	(*head)->in_fd = 0;
-	(*head)->out_fd = 5;
+	(*head)->out_fd = 1;
+	(*head)->full_cmd = all_cmd[0];
 	(*head)->next = NULL;
 	while (i < n)
 	{
@@ -53,6 +78,7 @@ void	ft_node_init(t_cmd **head, int n)
 		*head = (*head)->next;
 		(*head)->in_fd = 0;
 		(*head)->out_fd = 1;
+		(*head)->full_cmd = all_cmd[i];
 		(*head)->next = NULL;
 		i++;
 	}
@@ -83,8 +109,10 @@ t_cmd	**ft_fill_nodes(t_data *data)
 
 	head = malloc(sizeof(t_cmd *));
 	cmd_n = ft_count_nodes(data->cmd_trim);
-	ft_node_init(head, cmd_n);
 	all_cmd = malloc(sizeof(char **) * (cmd_n + 1));
+	ft_all_cmd_init(all_cmd, cmd_n, data->cmd_trim);
 	all_cmd = ft_fill_all_cmd(all_cmd, cmd_n, data->cmd_trim);
+	ft_node_init(head, cmd_n, all_cmd);
+//	ft_redirection(head);
 	return (head);
 }
