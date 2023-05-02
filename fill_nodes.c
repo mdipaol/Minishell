@@ -6,7 +6,7 @@
 /*   By: alegreci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 16:22:15 by alegreci          #+#    #+#             */
-/*   Updated: 2023/04/28 11:40:17 by alegreci         ###   ########.fr       */
+/*   Updated: 2023/05/02 15:19:30 by alegreci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,6 @@ t_cmd	**ft_fill_nodes(t_data *data)
 	ft_all_cmd_init(all_cmd, cmd_n, data->cmd_trim);
 	all_cmd = ft_fill_all_cmd(all_cmd, cmd_n, data->cmd_trim);
 	ft_node_init(head, cmd_n, all_cmd);
-//	ft_redirection(head);
+	ft_redirection(head);
 	return (head);
 }

@@ -6,7 +6,7 @@
 /*   By: alegreci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:34:35 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/04/24 16:33:47 by alegreci         ###   ########.fr       */
+/*   Updated: 2023/05/02 15:21:25 by alegreci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ typedef struct s_data
 	char	**expand;
 }	t_data;
 
+void	ft_redirection(t_cmd **head);
 t_cmd	**ft_fill_nodes(t_data *data);
 void	ft_split_all(t_data *data, char *s);
 int		quote_skipper(char *s, int start);
