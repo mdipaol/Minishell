@@ -3,17 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: marvin@42.fr <alegreci>                    +#+  +:+       +#+         #
+#    By: alegreci <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/17 13:45:50 by mdi-paol          #+#    #+#              #
-#    Updated: 2023/04/03 14:52:04 by marvin@42.f      ###   ########.fr        #
+#    Updated: 2023/04/28 11:34:26 by alegreci         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 LIBFT = libft/libft.a
 GNL = Get_Next_Line/get_next_line.c Get_Next_Line/get_next_line_utils.c
-SRC = main.c cmd_trim.c quote_manager.c expand_var.c utils1.c cmd_subsplit.c quote_split.c
+SRC = main.c cmd_trim.c quote_manager.c expand_var.c utils1.c cmd_subsplit.c quote_split.c fill_nodes.c nodes_helper.c
 FLAGS = -Wall -Werror -Wextra -g
 
 all : $(NAME)
