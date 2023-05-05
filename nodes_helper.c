@@ -6,7 +6,7 @@
 /*   By: alegreci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 11:34:45 by alegreci          #+#    #+#             */
-/*   Updated: 2023/05/05 15:09:58 by alegreci         ###   ########.fr       */
+/*   Updated: 2023/05/05 17:34:25 by alegreci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,12 +75,24 @@ char	**ft_cmd_cleaner(char **full_cmd)
 
 	i = 0;
 	j = 0;
-	new = malloc(sizeof(char *) * ft_cmd_clean_counter(full_cmd, i, j) + 1);
-	if (full_cmd)
-		return (full_cmd);
-	else
-		return (new);
-
+	j = ft_cmd_clean_counter(full_cmd, i, j);
+	new = malloc(sizeof(char *) * j + 1);
+	new[j] = NULL;
+	j = 0;
+	while (full_cmd[i])
+	{
+		if (full_cmd[i][0] == '<' && full_cmd[i + 1] && full_cmd[i + 1][0] == '<')
+			i += 3;
+		else if (full_cmd[i][0] == '<')
+			i += 2;
+		else if (full_cmd[i][0] == '>' && full_cmd[i + 1] && full_cmd[i + 1][0] == '>')
+			i += 3;
+		else if (full_cmd[i][0] == '>')
+			i += 2;
+		else
+			new[j++] = full_cmd[i++];
+	}
+	return (new);
 }
 
 void	ft_redirection(t_cmd **head)
