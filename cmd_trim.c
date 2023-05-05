@@ -6,7 +6,7 @@
 /*   By: alegreci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:38:36 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/04/24 16:21:14 by alegreci         ###   ########.fr       */
+/*   Updated: 2023/05/05 14:41:20 by alegreci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,6 @@ void	ft_split_all(t_data *data, char *s)
 	}
 	else
 		data->split_error = 1;
-   	for(int i = 0; data->cmd_trim[i]; i++)
-		printf("%s\n", data->cmd_trim[i]);
+/*    	for(int i = 0; data->cmd_trim[i]; i++)
+		printf("%s\n", data->cmd_trim[i]); */
 }

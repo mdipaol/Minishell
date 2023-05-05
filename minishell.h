@@ -6,7 +6,7 @@
 /*   By: alegreci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:34:35 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/05/02 15:21:25 by alegreci         ###   ########.fr       */
+/*   Updated: 2023/05/05 14:39:17 by alegreci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,5 +49,6 @@ int		ft_check_expand(char *s, char *check);
 int		ft_strlen_var(char *s, char *check);
 char	**ft_cmdsubsplit(char **s);
 char	**ft_quote_split(char **s);
+int		ft_get_fd(t_cmd *tmp, char **full_cmd, int flag);
 
 #endif
