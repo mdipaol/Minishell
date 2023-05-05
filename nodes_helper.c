@@ -3,91 +3,98 @@
 /*                                                        :::      ::::::::   */
 /*   nodes_helper.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alegreci <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 11:34:45 by alegreci          #+#    #+#             */
-/*   Updated: 2023/05/02 15:26:25 by alegreci         ###   ########.fr       */
+/*   Updated: 2023/05/05 15:55:19 by mdi-paol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+void	ft_fd_manager(t_cmd *tmp, char **full_cmd)
+{
+	int	i;
+
+	i = 0;
+	while (full_cmd[i])
+	{
+		if (full_cmd[i][0] == '<' && full_cmd[i + 1] && full_cmd[i + 1][0] == '<')
+		{
+			tmp->in_fd = ft_get_fd(tmp, full_cmd + i, 0);
+			i++;
+		}
+		else if (full_cmd[i][0] == '<')
+			tmp->in_fd = ft_get_fd(tmp, full_cmd + i, 1);
+		else if (full_cmd[i][0] == '>' && full_cmd[i + 1] && full_cmd[i + 1][0] == '>')
+		{
+			tmp->out_fd = ft_get_fd(tmp, full_cmd + i, 2);
+			i++;
+		}
+		else if (full_cmd[i][0] == '>')
+			tmp->out_fd = ft_get_fd(tmp, full_cmd + i, 3);
+		i++;
+	}
+}
+
 int	ft_cmd_clean_counter(char **full_cmd, int count, int i)
 {
 	while (full_cmd[i])
+	{
+		if (full_cmd[i][0] == '<' && full_cmd[i + 1] && full_cmd[i + 1][0] == '<')
+			count++;
+		else if (full_cmd[i][0] == '<')
+			count += 2;
+		else if (full_cmd[i][0] == '>' && full_cmd[i + 1] && full_cmd[i + 1][0] == '>')
+			count++;
+		else if (full_cmd[i][0] == '>')
+			count += 2;
 		i++;
-	i--;
-	if (full_cmd[0][0] == '<' && full_cmd[1] && full_cmd[1][0] == '<')
-		count += 3;
-	else if (full_cmd[0][0] == '<')
-		count += 2;
-	if (full_cmd[i][0] == '>' && i > 0 && full_cmd[i - 1][0] == '>')
-		count += 3;
-	else if (full_cmd[i][0] == '>')
-		count += 2;
-	return ((i + 1) - count);
+	}
+	//printf("count :%d, i : %d", count, i);
+	return (i - count);
 }
 
-int	ft_get_fd(char **full_cmd, int flag)
+int	ft_get_fd(t_cmd *tmp, char **full_cmd, int flag)
 {
-	if (full_cmd)
-		return (0);
-	else
-		return (flag);
+	char *path;
+
+	path = ft_obtain_path(full_cmd, flag);
+	ft_obtain_fd(tmp, path, flag);
+	/* if (flag == 0)
+		ft_heredoc();
+	if (flag == ) */
 	/* DA IMPLEMENTARE :
 		IN BASE AL TIPO DI FLAG CHE E' ARRIVATA APRE IL FILE DESCRIPTOR
-		E LO RITORNA, SE ARRIVA FLAG = 2 HEREDOC.
+		E LO RITORNA, SE ARRIVA FLAG = 0 HEREDOC.
 	*/
+	return(0);
 }
 
 char	**ft_cmd_cleaner(char **full_cmd)
 {
+	char	**new;
 	int		i;
 	int		j;
-	char	**new;
 
-	j = 0;
 	i = 0;
-	new = malloc(sizeof(char *) * (ft_cmd_clean_counter(full_cmd, i, j) + 1));
-	printf("%d", ft_cmd_clean_counter(full_cmd, i, j));
-	new[ft_cmd_clean_counter(full_cmd, i, j)] = NULL;
-/* 	while (full_cmd[i])
-	{
-		if (full_cmd[i][0] == '|')
-			i++;
-		else if (full_cmd[i][0] == '>' && full_cmd[i + 1] && full_cmd[i + 1][0] == '>')
-			i += 2;
-		else if (full_cmd[i][0] == '>')
-			i++;
-		else if (full_cmd[i][0] == '<' && full_cmd[i + 1] && full_cmd[i + 1][0] == '<')
-			i = i;
-		else if (full_cmd[i][0] == '<')
-			i += 2;
-		else
-			new[j++] = full_cmd[i++];
-	} */
-	return (new);
+	j = 0;
+	new = malloc(sizeof(char *) * ft_cmd_clean_counter(full_cmd, i, j) + 1);
+	if (full_cmd)
+		return (full_cmd);
+	else
+		return (new);
+
 }
 
 void	ft_redirection(t_cmd **head)
 {
 	t_cmd	*tmp;
-	int		i;
 
 	tmp = *head;
 	while (tmp)
 	{
-		i = 0;
-		if (tmp->full_cmd[0][0] == '<' && tmp->full_cmd[1][0] == '<')
-			tmp->in_fd = ft_get_fd(tmp->full_cmd, 0);
-		else if (tmp->full_cmd[0][0] == '<')
-			tmp->in_fd = ft_get_fd(tmp->full_cmd, 1);
-		while (tmp->full_cmd[i])
-			i++;
-		if (i > 1 && tmp->full_cmd[i - 1][0] == '>' && tmp->full_cmd[i - 2][0] == '>')
-			tmp->out_fd = ft_get_fd(tmp->full_cmd, 2);
-		else if (i > 0 && tmp->full_cmd[i - 1][0] == '>')
-			tmp->out_fd = ft_get_fd(tmp->full_cmd, 3);
+		ft_fd_manager(tmp, tmp->full_cmd);
 		tmp->full_cmd = ft_cmd_cleaner(tmp->full_cmd);
 		tmp = tmp->next;
 	}
