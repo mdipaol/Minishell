@@ -6,7 +6,7 @@
 /*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 11:34:45 by alegreci          #+#    #+#             */
-/*   Updated: 2023/05/05 15:41:18 by mdi-paol         ###   ########.fr       */
+/*   Updated: 2023/05/05 15:55:19 by mdi-paol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	ft_cmd_clean_counter(char **full_cmd, int count, int i)
 			count += 2;
 		i++;
 	}
-	printf("count :%d, i : %d", count, i);
+	//printf("count :%d, i : %d", count, i);
 	return (i - count);
 }
 
