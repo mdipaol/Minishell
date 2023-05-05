@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin@42.fr <alegreci>                    +#+  +:+       +#+        */
+/*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:34:35 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/04/03 14:55:57 by marvin@42.f      ###   ########.fr       */
+/*   Updated: 2023/05/05 15:54:53 by mdi-paol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,22 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include "libft/libft.h"
+# include "Get_Next_Line/get_next_line.h"
 # include <readline/readline.h>
 # include <readline/history.h>
 
+typedef struct s_cmd
+{
+	char			**full_cmd;
+	char			*full_path;
+	int				in_fd;
+	int				out_fd;
+	struct s_cmd	*next;
+}			t_cmd;
+
 typedef struct s_data
 {
+	t_cmd	**cmds;
 	int		run;
 	int		count_word;
 	int		split_error;
@@ -28,6 +39,8 @@ typedef struct s_data
 	char	**expand;
 }	t_data;
 
+void	ft_redirection(t_cmd **head);
+t_cmd	**ft_fill_nodes(t_data *data);
 void	ft_split_all(t_data *data, char *s);
 int		quote_skipper(char *s, int start);
 char	*quote_inserter(char *s, int start);
@@ -37,5 +50,8 @@ int		ft_check_expand(char *s, char *check);
 int		ft_strlen_var(char *s, char *check);
 char	**ft_cmdsubsplit(char **s);
 char	**ft_quote_split(char **s);
+int		ft_get_fd(t_cmd *tmp, char **full_cmd, int flag);
+char *ft_obtain_path(char **full_cmd, int flag);
+void	ft_obtain_fd(t_cmd *tmp, char *path, int flag);
 
 #endif
