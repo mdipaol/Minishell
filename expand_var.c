@@ -6,7 +6,7 @@
 /*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 10:14:33 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/04/20 17:10:04 by mdi-paol         ###   ########.fr       */
+/*   Updated: 2023/04/20 17:35:22 by mdi-paol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,8 @@ int	ft_create_str_var(t_data *data, int i, int j)
 	s = malloc(sizeof(char) * ft_strlen(var) + ft_strlen(data->cmd_trim[i]) - \
 	ft_strlen_var(data->cmd_trim[i] + j + 1, "|\"\'$?>< "));
 	data->cmd_trim[i] = ft_final_fill(data->cmd_trim[i], s, j, var);
-	j += ft_strlen_var(data->cmd_trim[i] + j + 1, "|\"\'$?>< ");
+/* 	j += ft_strlen_var(data->cmd_trim[i] + j + 1, "|\"\'$?>< ") + 1; */
+	j += ft_strlen(var) - 1;
 	return (j);
 }
 
