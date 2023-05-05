@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   nodes_helper.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alegreci <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 11:34:45 by alegreci          #+#    #+#             */
-/*   Updated: 2023/05/02 15:26:25 by alegreci         ###   ########.fr       */
+/*   Updated: 2023/05/05 14:31:48 by mdi-paol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,20 @@ int	ft_cmd_clean_counter(char **full_cmd, int count, int i)
 	return ((i + 1) - count);
 }
 
-int	ft_get_fd(char **full_cmd, int flag)
+int	ft_get_fd(t_cmd *tmp, char **full_cmd, int flag)
 {
-	if (full_cmd)
-		return (0);
-	else
-		return (flag);
+	char *path;
+
+	path = ft_obtain_path(full_cmd, flag);
+	ft_obtain_fd(tmp, path, flag);
+	/* if (flag == 0)
+		ft_heredoc();
+	if (flag == ) */
 	/* DA IMPLEMENTARE :
 		IN BASE AL TIPO DI FLAG CHE E' ARRIVATA APRE IL FILE DESCRIPTOR
 		E LO RITORNA, SE ARRIVA FLAG = 2 HEREDOC.
 	*/
+	return(0);
 }
 
 char	**ft_cmd_cleaner(char **full_cmd)
@@ -49,7 +53,7 @@ char	**ft_cmd_cleaner(char **full_cmd)
 	j = 0;
 	i = 0;
 	new = malloc(sizeof(char *) * (ft_cmd_clean_counter(full_cmd, i, j) + 1));
-	printf("%d", ft_cmd_clean_counter(full_cmd, i, j));
+	//printf("%d", ft_cmd_clean_counter(full_cmd, i, j));
 	new[ft_cmd_clean_counter(full_cmd, i, j)] = NULL;
 /* 	while (full_cmd[i])
 	{
@@ -72,22 +76,24 @@ char	**ft_cmd_cleaner(char **full_cmd)
 void	ft_redirection(t_cmd **head)
 {
 	t_cmd	*tmp;
-	int		i;
 
 	tmp = *head;
 	while (tmp)
 	{
-		i = 0;
 		if (tmp->full_cmd[0][0] == '<' && tmp->full_cmd[1][0] == '<')
-			tmp->in_fd = ft_get_fd(tmp->full_cmd, 0);
+			tmp->in_fd = ft_get_fd(tmp, tmp->full_cmd, 0);
 		else if (tmp->full_cmd[0][0] == '<')
-			tmp->in_fd = ft_get_fd(tmp->full_cmd, 1);
-		while (tmp->full_cmd[i])
+			tmp->in_fd = ft_get_fd(tmp, tmp->full_cmd, 1);
+		if (tmp->full_cmd[0][0] == '>' && tmp->full_cmd[1][0] == '>')
+			tmp->in_fd = ft_get_fd(tmp, tmp->full_cmd, 2);
+		else if (tmp->full_cmd[0][0] == '>')
+			tmp->in_fd = ft_get_fd(tmp, tmp->full_cmd, 3);
+/* 		while (tmp->full_cmd[i])
 			i++;
 		if (i > 1 && tmp->full_cmd[i - 1][0] == '>' && tmp->full_cmd[i - 2][0] == '>')
 			tmp->out_fd = ft_get_fd(tmp->full_cmd, 2);
 		else if (i > 0 && tmp->full_cmd[i - 1][0] == '>')
-			tmp->out_fd = ft_get_fd(tmp->full_cmd, 3);
+			tmp->out_fd = ft_get_fd(tmp->full_cmd, 3); */
 		tmp->full_cmd = ft_cmd_cleaner(tmp->full_cmd);
 		tmp = tmp->next;
 	}

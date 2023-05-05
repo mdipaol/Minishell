@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alegreci <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:34:35 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/05/02 15:21:25 by alegreci         ###   ########.fr       */
+/*   Updated: 2023/05/05 14:52:45 by mdi-paol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include "libft/libft.h"
+# include "Get_Next_Line/get_next_line.h"
 # include <readline/readline.h>
 # include <readline/history.h>
 
@@ -49,5 +50,6 @@ int		ft_check_expand(char *s, char *check);
 int		ft_strlen_var(char *s, char *check);
 char	**ft_cmdsubsplit(char **s);
 char	**ft_quote_split(char **s);
+char *ft_obtain_path(char **full_cmd, int flag);
 
 #endif
