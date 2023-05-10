@@ -6,22 +6,62 @@
 /*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 17:11:16 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/05/05 17:25:37 by mdi-paol         ###   ########.fr       */
+/*   Updated: 2023/05/10 17:50:17 by mdi-paol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char *ft_obtain_path(char **full_cmd, int flag)
+int	ft_get_str_heredoc(char *str, int flag)
+{
+	int		fd;
+	char	*heredoc;
+	int		i;
+
+	i = 0;
+	fd = open("/tmp/.heredoc", O_RDONLY);
+	while (i < flag)
+	{
+		heredoc = get_next_line(fd);
+		i++;
+	}
+	if (ft_strncmp(str, heredoc, ft_strlen(str)) == 0)
+		return (1);
+	return (0);
+}
+
+void	ft_heredoc(t_cmd *tmp, char *path)
+{
+	char	*std_in;
+	int		i;
+	int		flag;
+
+	while (1)
+	{
+		std_in = readline("> ");
+		flag++;
+		i = ft_strlen(std_in);
+		std_in[i] = '\n';
+		tmp->in_fd = open("/tmp/.heredoc", O_CREAT | O_RDWR | O_APPEND, 0666);
+		write(tmp->in_fd, std_in, ft_strlen(std_in));
+		close(tmp->in_fd);
+		if (ft_get_str_heredoc(path, flag))
+			break ;
+	}
+	unlink("/tmp/.heredoc");
+	printf("%d", tmp->in_fd);
+}
+
+char	*ft_obtain_path(char **full_cmd, int flag)
 {
 	if (flag == 0)
-		return(full_cmd[2]);
+		return (full_cmd[2]);
 	if (flag == 1)
-		return(full_cmd[1]);
+		return (full_cmd[1]);
 	if (flag == 2)
-		return(full_cmd[2]);
+		return (full_cmd[2]);
 	if (flag == 3)
-		return(full_cmd[1]);
+		return (full_cmd[1]);
 	return (0);
 }
 
@@ -37,8 +77,8 @@ void	ft_obtain_fd(t_cmd *tmp, char *path, int flag)
 		write(2, "error\n", 6);
 	else if (flag > 1 && access(path, W_OK) == -1 && access(path, F_OK) == 0)
 		write(2, "error\n", 6);
-/* 	if (flag == 0)
-		ft_heredoc(); */
+	if (flag == 0)
+		ft_heredoc(tmp, path);
 	if (flag == 1)
 		tmp->in_fd = open(path, O_RDONLY, 0666);
 	else if (flag == 2)

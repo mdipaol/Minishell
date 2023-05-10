@@ -6,7 +6,7 @@
 /*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 18:50:56 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/01/19 20:05:24 by mdi-paol         ###   ########.fr       */
+/*   Updated: 2023/05/10 14:54:04 by mdi-paol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ char	*search_return_line(char *storage, int fd)
 			free (buffer);
 			return (storage);
 		}
-		storage = ft_strjoin(storage, buffer);
+		storage = ft_strrjoin(storage, buffer);
 		free (buffer);
 	}
 	return (storage);
