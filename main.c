@@ -6,7 +6,7 @@
 /*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:16:21 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/04/19 18:38:44 by mdi-paol         ###   ########.fr       */
+/*   Updated: 2023/05/10 18:11:47 by mdi-paol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	ft_initialize(t_data *data)
 	data->split_error = 0;
 }
 
-int	main(void)
+int	main(char **envp)
 {
 	t_data	data;
 	char	*s;

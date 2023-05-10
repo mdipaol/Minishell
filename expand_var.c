@@ -6,13 +6,13 @@
 /*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 10:14:33 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/05/05 12:36:43 by mdi-paol         ###   ########.fr       */
+/*   Updated: 2023/05/10 18:12:43 by mdi-paol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char *ft_fill_var(char *var, char *s, char *check)
+char	*ft_fill_var(char *var, char *s, char *check)
 {
 	int	i;
 
