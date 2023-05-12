@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdi-paol <mdi-paol@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alegreci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 18:51:02 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/01/16 15:29:46 by mdi-paol         ###   ########.fr       */
+/*   Updated: 2023/05/12 15:51:33 by alegreci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	ft_ssstrlen(char *str)
 	return (i);
 }
 
-char	*ft_strcat(char *s1, char *s2, char *newstr, int i)
+char	*ft_sstrcat(char *s1, char *s2, char *newstr, int i)
 {
 	int	x;
 	int	y;
@@ -49,7 +49,7 @@ char	*ft_strcat(char *s1, char *s2, char *newstr, int i)
 	return (newstr);
 }
 
-char	*ft_strjoin(const char *s1, const char *s2)
+char	*ft_sstrjoin(const char *s1, const char *s2)
 {
 	int		i;
 	char	*newstr;
@@ -58,7 +58,7 @@ char	*ft_strjoin(const char *s1, const char *s2)
 	newstr = (char *)malloc(sizeof (char) * (i + ft_ssstrlen((char *)s2) + 1));
 	if (newstr == 0)
 		return (0);
-	return (ft_strcat((char *)s1, (char *)s2, newstr, i));
+	return (ft_sstrcat((char *)s1, (char *)s2, newstr, i));
 }
 
 void	ft_bzero(void *s, size_t n)

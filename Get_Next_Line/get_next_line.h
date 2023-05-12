@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdi-paol <mdi-paol@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alegreci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 18:51:05 by mdi-paol          #+#    #+#             */
-/*   Updated: 2022/12/12 15:51:02 by mdi-paol         ###   ########.fr       */
+/*   Updated: 2023/05/12 15:51:35 by alegreci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@
 
 char	*get_next_line(int fd);
 int		ft_ssstrlen(char *str);
-char	*ft_strcat(char *s1, char *s2, char *newstr, int i);
-char	*ft_strjoin(const char *s1, const char *s2);
+char	*ft_sstrcat(char *s1, char *s2, char *newstr, int i);
+char	*ft_sstrjoin(const char *s1, const char *s2);
 int		check_return_line(char *storage);
 char	*search_return_line(char *storage, int fd);
 void	ft_bzero(void *s, size_t n);
