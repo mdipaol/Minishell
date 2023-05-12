@@ -6,7 +6,7 @@
 /*   By: alegreci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 11:34:45 by alegreci          #+#    #+#             */
-/*   Updated: 2023/05/05 17:48:45 by alegreci         ###   ########.fr       */
+/*   Updated: 2023/05/05 17:58:12 by alegreci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ int	ft_cmd_clean_counter(char **full_cmd, int count, int i)
 			count += 2;
 		i++;
 	}
-	//printf("count :%d, i : %d", count, i);
 	return (i - count);
 }
 
@@ -68,7 +67,7 @@ int	ft_get_fd(t_cmd *tmp, char **full_cmd, int flag)
 		IN BASE AL TIPO DI FLAG CHE E' ARRIVATA APRE IL FILE DESCRIPTOR
 		E LO RITORNA, SE ARRIVA FLAG = 0 HEREDOC.
 	*/
-	return(0);
+	return (0);
 }
 
 char	**ft_cmd_cleaner(char **full_cmd)
