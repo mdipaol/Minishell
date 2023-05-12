@@ -6,7 +6,7 @@
 /*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 11:34:45 by alegreci          #+#    #+#             */
-/*   Updated: 2023/05/10 18:13:52 by mdi-paol         ###   ########.fr       */
+/*   Updated: 2023/05/12 16:21:47 by mdi-paol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,23 +75,41 @@ char	**ft_cmd_cleaner(char **full_cmd)
 
 	i = 0;
 	j = 0;
-	new = malloc(sizeof(char *) * ft_cmd_clean_counter(full_cmd, i, j) + 1);
-	if (full_cmd)
-		return (full_cmd);
-	else
-		return (new);
-
+	j = ft_cmd_clean_counter(full_cmd, i, j);
+	new = malloc(sizeof(char *) * j + 1);
+	new[j] = NULL;
+	j = 0;
+	while (full_cmd[i])
+	{
+		if (full_cmd[i][0] == '<' && full_cmd[i + 1] && full_cmd[i + 1][0] == '<')
+			i += 3;
+		else if (full_cmd[i][0] == '<')
+			i += 2;
+		else if (full_cmd[i][0] == '>' && full_cmd[i + 1] && full_cmd[i + 1][0] == '>')
+			i += 3;
+		else if (full_cmd[i][0] == '>')
+			i += 2;
+		else
+			new[j++] = full_cmd[i++];
+	}
+	return (new);
 }
 
 void	ft_redirection(t_cmd **head)
 {
 	t_cmd	*tmp;
+	char **path;
+
 
 	tmp = *head;
+	path = ft_split(getenv("PATH"), ':');
 	while (tmp)
 	{
 		ft_fd_manager(tmp, tmp->full_cmd);
 		tmp->full_cmd = ft_cmd_cleaner(tmp->full_cmd);
+		tmp->full_path = ft_full_path_finder(tmp->full_cmd, path);
+		if (tmp->full_path)
+		printf("%s\n", tmp->full_path);
 		tmp = tmp->next;
 	}
 }
