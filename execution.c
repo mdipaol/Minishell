@@ -6,13 +6,13 @@
 /*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 16:33:32 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/05/12 19:09:16 by mdi-paol         ###   ########.fr       */
+/*   Updated: 2023/05/12 20:06:19 by mdi-paol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_check_pipe(t_cmd *tmp)
+void	ft_check_redirect(t_cmd *tmp)
 {
 	if (tmp->in_fd != STDIN_FILENO)
 	{
@@ -26,6 +26,15 @@ void	ft_check_pipe(t_cmd *tmp)
 	}
 }
 
+void	ft_check_pipe(t_cmd *tmp)
+{
+	int	fd[2];
+
+	pipe(fd);
+	dup2(fd[1], tmp->in_fd);
+	dup2(fd[0], tmp->out_fd);
+}
+
 void	ft_exec(t_cmd *tmp, char **envp)
 {
 	pid_t	pid;
@@ -33,6 +42,7 @@ void	ft_exec(t_cmd *tmp, char **envp)
 	pid = fork();
 	if (pid == 0)
 	{
+		ft_check_redirect(tmp);
 		ft_check_pipe(tmp);
 		execve(tmp->full_path, tmp->full_cmd, envp);
 	}
@@ -50,4 +60,3 @@ void	ft_execution_manager(t_data	*data)
 		tmp = tmp->next;
 	}
 }
-
