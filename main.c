@@ -6,7 +6,7 @@
 /*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:16:21 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/05/10 18:15:30 by mdi-paol         ###   ########.fr       */
+/*   Updated: 2023/05/12 12:07:25 by mdi-paol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,14 @@ void	ft_initialize(t_data *data)
 	data->split_error = 0;
 }
 
-int	main(void)
+int	main(int argc, char **argv, char **envp)
 {
 	t_data	data;
 	char	*s;
 
+	(void)argc;
+	(void)argv;
+	(void)envp;
 	s = NULL;
 	ft_initialize(&data);
 	while (data.run)

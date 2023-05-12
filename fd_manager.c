@@ -6,7 +6,7 @@
 /*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 17:11:16 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/05/10 17:50:17 by mdi-paol         ###   ########.fr       */
+/*   Updated: 2023/05/12 14:32:18 by mdi-paol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,11 @@ int	ft_get_str_heredoc(char *str, int flag)
 		i++;
 	}
 	if (ft_strncmp(str, heredoc, ft_strlen(str)) == 0)
+	{
+		close(fd);
 		return (1);
+	}
+	close(fd);
 	return (0);
 }
 
@@ -36,6 +40,8 @@ void	ft_heredoc(t_cmd *tmp, char *path)
 	int		i;
 	int		flag;
 
+	flag = 0;
+	unlink("/tmp/.heredoc");
 	while (1)
 	{
 		std_in = readline("> ");
@@ -48,8 +54,6 @@ void	ft_heredoc(t_cmd *tmp, char *path)
 		if (ft_get_str_heredoc(path, flag))
 			break ;
 	}
-	unlink("/tmp/.heredoc");
-	printf("%d", tmp->in_fd);
 }
 
 char	*ft_obtain_path(char **full_cmd, int flag)
