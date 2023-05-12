@@ -6,7 +6,7 @@
 /*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:34:35 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/05/12 16:35:01 by mdi-paol         ###   ########.fr       */
+/*   Updated: 2023/05/12 19:02:29 by mdi-paol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,9 @@
 # include "Get_Next_Line/get_next_line.h"
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <sys/types.h>
+# include <sys/wait.h>
+
 
 typedef struct s_cmd
 {
@@ -37,6 +40,7 @@ typedef struct s_data
 	int		split_error;
 	char	**cmd_trim;
 	char	**expand;
+	char	**envp;
 }	t_data;
 
 void	ft_redirection(t_cmd **head);
@@ -50,10 +54,10 @@ int		ft_check_expand(char *s, char *check);
 int		ft_strlen_var(char *s, char *check);
 char	**ft_cmdsubsplit(char **s);
 char	**ft_quote_split(char **s);
-int		ft_get_fd(t_cmd *tmp, char **full_cmd, int flag);
+void	ft_get_fd(t_cmd *tmp, char **full_cmd, int flag);
 char	*ft_obtain_path(char **full_cmd, int flag);
 void	ft_obtain_fd(t_cmd *tmp, char *path, int flag);
 char	*ft_full_path_finder(char **full_cmd, char **path);
-void	ft_executor(t_data	*data);
+void	ft_execution_manager(t_data	*data);
 
 #endif
