@@ -6,7 +6,7 @@
 /*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 16:57:57 by alegreci          #+#    #+#             */
-/*   Updated: 2023/05/12 16:59:29 by mdi-paol         ###   ########.fr       */
+/*   Updated: 2023/05/16 12:18:32 by mdi-paol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*ft_full_path_finder(char **full_cmd, char **path)
 	char	*tmp;
 
 	i = 0;
-	if (!full_cmd[0])
+	if (!full_cmd[0] || ft_is_builtin(full_cmd[0]))
 		return (NULL);
 	if (ft_strchr(full_cmd[0], '/'))
 		return (full_cmd[0]);

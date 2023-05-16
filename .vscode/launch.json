@@ -10,6 +10,7 @@
         "request": "launch",
         "program": "${workspaceFolder}/minishell",
         "args": [],
+        "preLaunchTask": "Run Child Process",
         "stopAtEntry": false,
         "cwd": "${workspaceFolder}",
         "environment": [],
