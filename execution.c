@@ -6,7 +6,7 @@
 /*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 16:33:32 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/05/16 12:17:57 by mdi-paol         ###   ########.fr       */
+/*   Updated: 2023/05/16 18:30:03 by mdi-paol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,10 @@ void	ft_exec(t_cmd *tmp, char **envp)
 	if (pid == 0)
 	{
 		ft_check_redirect(tmp);
-		execve(tmp->full_path, tmp->full_cmd, envp);
+		if (ft_is_builtin(tmp->full_cmd[0]))
+			ft_builtin(tmp, envp);
+		else
+			execve(tmp->full_path, tmp->full_cmd, envp);
 	}
  	if(tmp->out_fd != 1)
 		close(tmp->out_fd);
@@ -71,10 +74,7 @@ void	ft_execution_manager(t_data	*data)
 	{
 		if (tmp->next)
 			ft_pipe(tmp);
-		if (ft_is_builtin(tmp->full_cmd[0]))
-			printf("vaffanculo");
-		else
-			ft_exec(tmp, data->envp);
+		ft_exec(tmp, data->envp);
 		tmp = tmp->next;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:34:35 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/05/16 12:17:36 by mdi-paol         ###   ########.fr       */
+/*   Updated: 2023/05/16 18:30:37 by mdi-paol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,5 +60,6 @@ void	ft_obtain_fd(t_cmd *tmp, char *path, int flag);
 char	*ft_full_path_finder(char **full_cmd, char **path);
 void	ft_execution_manager(t_data	*data);
 int	ft_is_builtin(char *tmp);
+void	ft_builtin(t_cmd *tmp, char **envp);
 
 #endif
