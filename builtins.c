@@ -6,7 +6,7 @@
 /*   By: alegreci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 12:06:20 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/05/17 15:55:58 by alegreci         ###   ########.fr       */
+/*   Updated: 2023/05/17 16:51:16 by alegreci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,14 +48,22 @@ void	ft_echo(char **full_cmd)
 	i = 1;
 	flag = 0;
 	new = 1;
-
 	while (full_cmd[i])
 	{
-		if (!flag && !ft_strncmp(full_cmd[i], "-n", 2) && (ft_char_counter(full_cmd[i], "n") - ft_strlen(full_cmd[i])))
-		{
+		if (!flag && !ft_strncmp(full_cmd[i], "-n", 2) && \
+		(ft_char_counter(full_cmd[i], 'n') == (int)ft_strlen(full_cmd[i]) - 1))
 			new = 0;
+		else
+		{
+			flag = 1;
+			write(1, full_cmd[i], ft_strlen(full_cmd[i]));
+			if (full_cmd[i + 1])
+				write(1, " ", 1);
 		}
+		i++;
 	}
+	if (new)
+		write(1, "\n", 1);
 }
 
 void	ft_env(char **envp)
@@ -73,7 +81,6 @@ void	ft_env(char **envp)
 
 void	ft_builtin(t_cmd *tmp, char **envp)
 {
-
 	if (ft_strncmp(tmp->full_cmd[0], "echo", 5) == 0)
 		ft_echo(tmp->full_cmd);
 	/* else if (ft_strncmp(tmp->full_cmd, "cd", 2) == 0)
@@ -109,4 +116,3 @@ int	ft_is_builtin(char *full_cmd)
 		return (1);
 	return (0);
 }
-
