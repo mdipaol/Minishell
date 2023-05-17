@@ -6,7 +6,7 @@
 /*   By: alegreci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 12:06:20 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/05/17 16:51:16 by alegreci         ###   ########.fr       */
+/*   Updated: 2023/05/17 19:24:00 by alegreci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,11 @@ void	ft_pwd(void)
 {
 	char	*s;
 
-	s = getenv("PWD");
+	s = getcwd(NULL, 0);
+	getcwd(s, sizeof(s));
 	write(1, s, ft_strlen(s));
 	write(1, "\n", 1);
+	free(s);
 }
 
 /* void	ft_export(t_cmd *tmp, char **envp)
@@ -83,8 +85,8 @@ void	ft_builtin(t_cmd *tmp, char **envp)
 {
 	if (ft_strncmp(tmp->full_cmd[0], "echo", 5) == 0)
 		ft_echo(tmp->full_cmd);
-	/* else if (ft_strncmp(tmp->full_cmd, "cd", 2) == 0)
-		ft_cd(tmp); */
+	else if (ft_strncmp(tmp->full_cmd[0], "cd", 2) == 0)
+		ft_cd(tmp->full_cmd, envp);
 	else if (ft_strncmp(tmp->full_cmd[0], "pwd", 3) == 0)
 		ft_pwd();
 /* 	else if (ft_strncmp(tmp->full_cmd[0], "export", 6) == 0)
@@ -95,7 +97,6 @@ void	ft_builtin(t_cmd *tmp, char **envp)
 		ft_env(envp);
 /* 	else if (ft_strncmp(tmp->full_cmd, "exit", 4) == 0)
 		ft_exit(tmp); */
-	exit(1);
 }
 
 int	ft_is_builtin(char *full_cmd)

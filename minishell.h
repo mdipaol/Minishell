@@ -6,7 +6,7 @@
 /*   By: alegreci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:34:35 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/05/17 15:50:24 by alegreci         ###   ########.fr       */
+/*   Updated: 2023/05/17 18:52:02 by alegreci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,5 +62,6 @@ void	ft_execution_manager(t_data	*data);
 int		ft_is_builtin(char *tmp);
 void	ft_builtin(t_cmd *tmp, char **envp);
 int		ft_char_counter(char *s, char c);
+void	ft_cd(char **full_cmd, char **envp);
 
 #endif

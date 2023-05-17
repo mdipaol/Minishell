@@ -3,14 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: alegreci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 16:33:32 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/05/16 18:30:03 by mdi-paol         ###   ########.fr       */
+/*   Updated: 2023/05/17 17:40:48 by alegreci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	ft_save_std(int *std, int flag)
+{
+	if (flag)
+	{
+		dup2(std[0], STDIN_FILENO);
+		dup2(std[1], STDOUT_FILENO);
+		close(std[0]);
+		close(std[1]);
+	}
+	else
+	{
+		dup2(STDIN_FILENO, std[0]);
+		dup2(STDOUT_FILENO, std[1]);
+
+	}
+}
 
 void	ft_check_redirect(t_cmd *tmp)
 {
@@ -31,14 +48,14 @@ void	ft_pipe(t_cmd *tmp)
 	int	fd[2];
 
 	pipe(fd);
-	if(tmp->out_fd != 1)
+	if (tmp->out_fd != 1)
 	{
-		dup2(tmp->out_fd,fd[1]);
+		dup2(tmp->out_fd, fd[1]);
 		close(tmp->out_fd);
 	}
-	if(tmp->next->in_fd != 0)
+	if (tmp->next->in_fd != 0)
 	{
-		dup2(tmp->next->in_fd,fd[0]);
+		dup2(tmp->next->in_fd, fd[0]);
 		close(tmp->next->in_fd);
 	}
 	tmp->out_fd = fd[1];
@@ -48,19 +65,24 @@ void	ft_pipe(t_cmd *tmp)
 void	ft_exec(t_cmd *tmp, char **envp)
 {
 	pid_t	pid;
+	int		std[2];
 
+	pipe(std);
+	ft_save_std(std, 0);
+	ft_check_redirect(tmp);
+	if (ft_is_builtin(tmp->full_cmd[0]))
+		ft_builtin(tmp, envp);
 	pid = fork();
 	if (pid == 0)
 	{
-		ft_check_redirect(tmp);
 		if (ft_is_builtin(tmp->full_cmd[0]))
-			ft_builtin(tmp, envp);
-		else
-			execve(tmp->full_path, tmp->full_cmd, envp);
+			exit(0);
+		execve(tmp->full_path, tmp->full_cmd, envp);
 	}
- 	if(tmp->out_fd != 1)
+	ft_save_std(std, 1);
+	if (tmp->out_fd != 1)
 		close(tmp->out_fd);
-	if(tmp->in_fd != 0)
+	if (tmp->in_fd != 0)
 		close(tmp->in_fd);
 	waitpid(pid, NULL, 0);
 }
