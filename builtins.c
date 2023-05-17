@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: alegreci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 12:06:20 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/05/16 18:50:49 by mdi-paol         ###   ########.fr       */
+/*   Updated: 2023/05/17 15:55:58 by alegreci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,14 @@
 
 void	ft_pwd(void)
 {
-	char *s = getenv("PWD");
+	char	*s;
+
+	s = getenv("PWD");
 	write(1, s, ft_strlen(s));
 	write(1, "\n", 1);
 }
 
-void	ft_export(t_cmd *tmp, char **envp)
+/* void	ft_export(t_cmd *tmp, char **envp)
 {
 	int	i;
 	char **env = __environ;
@@ -35,25 +37,57 @@ void	ft_export(t_cmd *tmp, char **envp)
 		}
 	}
 
+} */
+
+void	ft_echo(char **full_cmd)
+{
+	int	i;
+	int	flag;
+	int	new;
+
+	i = 1;
+	flag = 0;
+	new = 1;
+
+	while (full_cmd[i])
+	{
+		if (!flag && !ft_strncmp(full_cmd[i], "-n", 2) && (ft_char_counter(full_cmd[i], "n") - ft_strlen(full_cmd[i])))
+		{
+			new = 0;
+		}
+	}
+}
+
+void	ft_env(char **envp)
+{
+	int	i;
+
+	i = 0;
+	while (envp && envp[i])
+	{
+		write(1, envp[i], ft_strlen(envp[i]));
+		write(1, "\n", 1);
+		i++;
+	}
 }
 
 void	ft_builtin(t_cmd *tmp, char **envp)
 {
 
-	/* if (ft_strncmp(tmp->full_cmd, "echo", 5) == 0)
-		ft_echo(tmp);
-	else if (ft_strncmp(tmp->full_cmd, "cd", 2) == 0)
+	if (ft_strncmp(tmp->full_cmd[0], "echo", 5) == 0)
+		ft_echo(tmp->full_cmd);
+	/* else if (ft_strncmp(tmp->full_cmd, "cd", 2) == 0)
 		ft_cd(tmp); */
-	if (ft_strncmp(tmp->full_cmd[0], "pwd", 3) == 0)
+	else if (ft_strncmp(tmp->full_cmd[0], "pwd", 3) == 0)
 		ft_pwd();
-	else if (ft_strncmp(tmp->full_cmd[0], "export", 6) == 0)
-		ft_export(tmp, envp);
-	else if (ft_strncmp(tmp->full_cmd, "unset", 5) == 0)
-		ft_unset(tmp);
-	else if (ft_strncmp(tmp->full_cmd, "env", 3) == 0)
-		ft_env(tmp);
-	else if (ft_strncmp(tmp->full_cmd, "exit", 4) == 0)
-		ft_exit(tmp);
+/* 	else if (ft_strncmp(tmp->full_cmd[0], "export", 6) == 0)
+		ft_export(tmp, envp); */
+/* 	else if (ft_strncmp(tmp->full_cmd, "unset", 5) == 0)
+		ft_unset(tmp); */
+	else if (ft_strncmp(tmp->full_cmd[0], "env", 3) == 0)
+		ft_env(envp);
+/* 	else if (ft_strncmp(tmp->full_cmd, "exit", 4) == 0)
+		ft_exit(tmp); */
 	exit(1);
 }
 

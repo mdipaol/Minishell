@@ -3,14 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   utils1.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: alegreci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 17:31:34 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/04/20 16:35:30 by mdi-paol         ###   ########.fr       */
+/*   Updated: 2023/05/17 15:50:27 by alegreci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	ft_char_counter(char *s, char c)
+{
+	int	i;
+	int	n;
+
+	i = 0;
+	n = 0;
+	while (s[i])
+	{
+		if (s[i] == c)
+			n++;
+		i++;
+	}
+	return (n);
+}
 
 int	ft_strlen_var(char *s, char *check)
 {
