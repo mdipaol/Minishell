@@ -6,7 +6,7 @@
 /*   By: alegreci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 16:33:32 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/05/17 17:40:48 by alegreci         ###   ########.fr       */
+/*   Updated: 2023/05/18 18:39:24 by alegreci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	ft_pipe(t_cmd *tmp)
 	tmp->next->in_fd = fd[0];
 }
 
-void	ft_exec(t_cmd *tmp, char **envp)
+void	ft_exec(t_cmd *tmp, char ***envp)
 {
 	pid_t	pid;
 	int		std[2];
@@ -77,7 +77,7 @@ void	ft_exec(t_cmd *tmp, char **envp)
 	{
 		if (ft_is_builtin(tmp->full_cmd[0]))
 			exit(0);
-		execve(tmp->full_path, tmp->full_cmd, envp);
+		execve(tmp->full_path, tmp->full_cmd, *envp);
 	}
 	ft_save_std(std, 1);
 	if (tmp->out_fd != 1)
@@ -96,7 +96,7 @@ void	ft_execution_manager(t_data	*data)
 	{
 		if (tmp->next)
 			ft_pipe(tmp);
-		ft_exec(tmp, data->envp);
+		ft_exec(tmp, &data->envp);
 		tmp = tmp->next;
 	}
 }

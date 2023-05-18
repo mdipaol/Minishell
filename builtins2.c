@@ -6,16 +6,65 @@
 /*   By: alegreci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 18:27:04 by alegreci          #+#    #+#             */
-/*   Updated: 2023/05/17 19:37:05 by alegreci         ###   ########.fr       */
+/*   Updated: 2023/05/18 18:46:51 by alegreci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_set_env(char *old_pwd, char **envp)
+char	**ft_set_export(char *cmd, char **envp, int i, int id)
+{
+	char	**new_envp;
+
+	id = 0;
+	i = 0;
+	while (cmd[id] != '=')
+		id++;
+	while (envp[i])
+	{
+		if (!ft_strncmp(cmd, envp[i], id + 1))
+		{
+			envp[i] = cmd;
+			return (envp);
+		}
+		i++;
+	}
+	new_envp = malloc(sizeof(char *) * (i + 2));
+	i = 0;
+	while (envp[i])
+	{
+		new_envp[i] = envp[i];
+		i++;
+	}
+	new_envp[i++] = cmd;
+	new_envp[i] = NULL;
+	return (new_envp);
+}
+
+void	ft_export(char **full_cmd, char ***envp)
 {
 	int	i;
-	char *pwd;
+
+	i = 1;
+	if (!full_cmd[1])
+		return ;
+	while (full_cmd[i])
+	{
+		if (ft_strchr(full_cmd[i], '='))
+		{
+			if (full_cmd[i][0] == '=')
+				write(2, "export: `=': not a valid identifier\n", 36);
+			else
+				*envp = ft_set_export(full_cmd[i], *envp, i, 0);
+		}
+		i++;
+	}
+}
+
+void	ft_set_env(char *old_pwd, char **envp)
+{
+	int		i;
+	char	*pwd;
 
 	i = 0;
 	pwd = getcwd(NULL, 0);

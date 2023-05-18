@@ -6,7 +6,7 @@
 /*   By: alegreci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 12:06:20 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/05/17 19:24:00 by alegreci         ###   ########.fr       */
+/*   Updated: 2023/05/18 19:13:45 by alegreci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,24 +22,6 @@ void	ft_pwd(void)
 	write(1, "\n", 1);
 	free(s);
 }
-
-/* void	ft_export(t_cmd *tmp, char **envp)
-{
-	int	i;
-	char **env = __environ;
-
-	(void)envp;
-	i = 0;
-	if (!tmp->full_cmd[1])
-	{
-		while (env[i])
-		{
-			printf("%s\n", env[i]);
-			i++;
-		}
-	}
-
-} */
 
 void	ft_echo(char **full_cmd)
 {
@@ -81,20 +63,20 @@ void	ft_env(char **envp)
 	}
 }
 
-void	ft_builtin(t_cmd *tmp, char **envp)
+void	ft_builtin(t_cmd *tmp, char ***envp)
 {
 	if (ft_strncmp(tmp->full_cmd[0], "echo", 5) == 0)
 		ft_echo(tmp->full_cmd);
 	else if (ft_strncmp(tmp->full_cmd[0], "cd", 2) == 0)
-		ft_cd(tmp->full_cmd, envp);
+		ft_cd(tmp->full_cmd, *envp);
 	else if (ft_strncmp(tmp->full_cmd[0], "pwd", 3) == 0)
 		ft_pwd();
-/* 	else if (ft_strncmp(tmp->full_cmd[0], "export", 6) == 0)
-		ft_export(tmp, envp); */
-/* 	else if (ft_strncmp(tmp->full_cmd, "unset", 5) == 0)
-		ft_unset(tmp); */
+	else if (ft_strncmp(tmp->full_cmd[0], "export", 6) == 0)
+		ft_export(tmp->full_cmd, envp);
+	else if (ft_strncmp(tmp->full_cmd[0], "unset", 5) == 0)
+		ft_unset(tmp->full_cmd, envp);
 	else if (ft_strncmp(tmp->full_cmd[0], "env", 3) == 0)
-		ft_env(envp);
+		ft_env(*envp);
 /* 	else if (ft_strncmp(tmp->full_cmd, "exit", 4) == 0)
 		ft_exit(tmp); */
 }
