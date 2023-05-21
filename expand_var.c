@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_var.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: alegreci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 10:14:33 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/05/13 18:36:09 by mdi-paol         ###   ########.fr       */
+/*   Updated: 2023/05/21 15:52:49 by alegreci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,8 @@ char	**ft_expand(t_data *data)
 		j = 0;
 		while (data->cmd_trim[i][j])
 		{
+			if (data->cmd_trim[i][j] == '\'')
+				j = quote_skipper(data->cmd_trim[i], j);
 			if (data->cmd_trim[i][j] == '$')
 				j = ft_create_str_var(data, i, j);
 			j++;
