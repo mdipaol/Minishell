@@ -6,14 +6,14 @@
 /*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 17:03:49 by mdi-paol          #+#    #+#             */
-/*   Updated: 2022/10/17 19:28:12 by mdi-paol         ###   ########.fr       */
+/*   Updated: 2023/05/22 17:31:37 by mdi-paol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"libft.h"
 #include<stddef.h>
 
-char	*fill(char *str, long int n, int i)
+char	*ft_fill(char *str, long int n, int i)
 {
 	str[i] = '\0';
 	i = i - 1;
@@ -59,5 +59,5 @@ char	*ft_itoa(int n)
 	a = n;
 	i = counter(a);
 	str = (char *)malloc(sizeof (char) * (i + 1));
-	return (fill(str, a, i));
+	return (ft_fill(str, a, i));
 }

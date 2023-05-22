@@ -6,7 +6,7 @@
 /*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 16:57:57 by alegreci          #+#    #+#             */
-/*   Updated: 2023/05/22 12:21:00 by mdi-paol         ###   ########.fr       */
+/*   Updated: 2023/05/22 17:18:29 by mdi-paol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char	*ft_full_path_finder(char **full_cmd, char **path)
 	}
 	if (!path[i])
 	{
-		write(2, "command not found\n", 18);
+		ft_error("Minishem: Command not found\n", 127);
 		cmd = NULL;
 	}
 	return (cmd);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alegreci <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 18:27:04 by alegreci          #+#    #+#             */
-/*   Updated: 2023/05/18 18:46:51 by alegreci         ###   ########.fr       */
+/*   Updated: 2023/05/22 17:07:57 by mdi-paol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	ft_export(char **full_cmd, char ***envp)
 		if (ft_strchr(full_cmd[i], '='))
 		{
 			if (full_cmd[i][0] == '=')
-				write(2, "export: `=': not a valid identifier\n", 36);
+				ft_error("export: '=': not a valid identifier\n", 1);
 			else
 				*envp = ft_set_export(full_cmd[i], *envp, i, 0);
 		}
@@ -88,7 +88,7 @@ void	ft_chdir(char *path, char *pwd)
 		free(pwd);
 	}
 	if (chdir(path) == -1)
-		write(2, "error\n", 6);
+		ft_error("Minishem: cd: No such file or directory\n", 1);
 }
 
 void	ft_cd(char **full_cmd, char **envp)
@@ -103,9 +103,8 @@ void	ft_cd(char **full_cmd, char **envp)
 	s = full_cmd[1];
 	if (full_cmd[1] && full_cmd[2])
 	{
-		write(2, "cd: string not in pwd:", 22);
-		write(2, full_cmd[1], ft_strlen(full_cmd[1]));
-		write(1, "\n", 1);
+		ft_error("Minishem: cd: Too many arguments\n", 1);
+		return ;
 	}
 	pwd = getcwd(NULL, 0);
 	getcwd(pwd, sizeof(pwd));

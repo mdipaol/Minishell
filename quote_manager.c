@@ -6,7 +6,7 @@
 /*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 18:38:22 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/05/22 15:59:42 by mdi-paol         ###   ########.fr       */
+/*   Updated: 2023/05/22 17:08:55 by mdi-paol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	ft_check_quote(char *s)
 				i++;
 			if (!s[i])
 			{
-				write(1, "Error: unmatched quotes\n", 24);
+				ft_error("Minishem: Error: unmatched quotes\n", 1);
 				return (1);
 			}
 		}

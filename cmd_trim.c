@@ -6,7 +6,7 @@
 /*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:38:36 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/05/12 16:32:47 by mdi-paol         ###   ########.fr       */
+/*   Updated: 2023/05/22 19:07:40 by mdi-paol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,9 +122,8 @@ void	ft_split_all(t_data *data, char *s)
 		data->cmd_trim = ft_cmdsubsplit(data->cmd_trim);
 		data->cmd_trim = ft_quote_split(data->cmd_trim);
 		data->cmds = ft_fill_nodes(data);
+		free (data->cmd_trim);
 	}
 	else
 		data->split_error = 1;
-/*    	for(int i = 0; data->cmd_trim[i]; i++)
-		printf("%s\n", data->cmd_trim[i]); */
 }

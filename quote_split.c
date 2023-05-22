@@ -6,7 +6,7 @@
 /*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 14:50:44 by marvin@42.f       #+#    #+#             */
-/*   Updated: 2023/05/07 21:17:23 by mdi-paol         ###   ########.fr       */
+/*   Updated: 2023/05/22 19:03:55 by mdi-paol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ char	*quote_remover(char *s)
 			removed[q++] = s[i++];
 	}
 	removed[q] = '\0';
+	free(s);
 	return (removed);
 }
 
@@ -57,5 +58,6 @@ char	**ft_quote_split(char **s)
 		i++;
 	}
 	final[i] = NULL;
+	free(s);
 	return (final);
 }

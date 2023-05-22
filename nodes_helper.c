@@ -6,7 +6,7 @@
 /*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 11:34:45 by alegreci          #+#    #+#             */
-/*   Updated: 2023/05/22 11:55:13 by mdi-paol         ###   ########.fr       */
+/*   Updated: 2023/05/22 18:39:53 by mdi-paol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,9 +97,10 @@ char	**ft_cmd_cleaner(char **full_cmd)
 void	ft_redirection(t_cmd **head)
 {
 	t_cmd	*tmp;
-	char **path;
+	char	**path;
+	int		i;
 
-
+	i = 0;
 	tmp = *head;
 	path = ft_split(getenv("PATH"), ':');
 	while (tmp)
@@ -109,5 +110,11 @@ void	ft_redirection(t_cmd **head)
 		tmp->full_path = ft_full_path_finder(tmp->full_cmd, path);
 		tmp = tmp->next;
 	}
+	while (path[i])
+	{
+		free(path[i]);
+		i++;
+	}
+	free(path);
 }
 

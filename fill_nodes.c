@@ -6,7 +6,7 @@
 /*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 16:22:15 by alegreci          #+#    #+#             */
-/*   Updated: 2023/05/12 14:45:55 by mdi-paol         ###   ########.fr       */
+/*   Updated: 2023/05/22 19:15:18 by mdi-paol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ char	***ft_fill_all_cmd(char ***all, int n, char **trim)
 		i++;
 		j++;
 	}
+
 	return (all);
 }
 
@@ -89,13 +90,23 @@ int	ft_count_nodes(char **s)
 {
 	int	count;
 	int	i;
+	int	flag;
 
+	flag = 0;
 	i = 0;
 	count = 1;
 	while (s[i])
 	{
 		if (ft_strchr(s[i], '|'))
+		{
+			if ((!s[i + 1] || ft_strchr(s[i + 1], '|')) && !flag)
+			{
+				ft_error(\
+				"Minishem: syntax error near unexpected token '|'\n", 1);
+				flag = 1;
+			}
 			count++;
+		}
 		i++;
 	}
 	return (count);
@@ -114,5 +125,6 @@ t_cmd	**ft_fill_nodes(t_data *data)
 	all_cmd = ft_fill_all_cmd(all_cmd, cmd_n, data->cmd_trim);
 	ft_node_init(head, cmd_n, all_cmd);
 	ft_redirection(head);
+	free (all_cmd);
 	return (head);
 }

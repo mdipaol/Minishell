@@ -6,7 +6,7 @@
 /*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 16:33:32 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/05/22 15:58:26 by mdi-paol         ###   ########.fr       */
+/*   Updated: 2023/05/22 18:13:31 by mdi-paol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,12 +67,17 @@ void	ft_exec(t_cmd *tmp, char ***envp, t_data *data)
 	pid_t	pid;
 	int		std[2];
 
-	pipe(std);
+	if (!tmp->full_cmd[0])
+		return ;
+	if (pipe(std) == -1)
+		ft_error("Minishem: error creating pipe\n", 1);
 	ft_save_std(std, 0);
 	ft_check_redirect(tmp);
 	if (ft_is_builtin(tmp->full_cmd[0]))
 		ft_builtin(tmp, envp, data);
 	pid = fork();
+	if (pid < 0)
+		ft_error ("Minishem: fork failed\n", 1);
 	if (pid == 0)
 	{
 		if (!tmp->full_path || ft_is_builtin(tmp->full_cmd[0]))
@@ -97,9 +102,14 @@ void	ft_execution_manager(t_data	*data)
 	tmp = *data->cmds;
 	while (tmp)
 	{
-		if (tmp->next)
-			ft_pipe(tmp);
-		ft_exec(tmp, &data->envp, data);
-		tmp = tmp->next;
+		if (tmp->in_fd < 0 || tmp->out_fd < 0)
+			tmp = tmp->next;
+		else
+		{
+			if (tmp->next)
+				ft_pipe(tmp);
+			ft_exec(tmp, &data->envp, data);
+			tmp = tmp->next;
+		}
 	}
 }

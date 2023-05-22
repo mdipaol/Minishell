@@ -6,7 +6,7 @@
 /*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 17:11:16 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/05/22 15:46:50 by mdi-paol         ###   ########.fr       */
+/*   Updated: 2023/05/22 18:01:18 by mdi-paol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,11 @@ void	ft_obtain_fd(t_cmd *tmp, char *path, int flag)
 	else if ((flag == 2 || flag == 3) && tmp->out_fd > 2)
 		close (tmp->out_fd);
 	if (access(path, F_OK) == -1 && flag == 1)
-		write(2, "error\n", 6);
+		ft_error("Minishem: No such file or directory\n", 1);
 	else if (flag == 1 && access(path, R_OK) == -1)
-		write(2, "error\n", 6);
+		ft_error("Minishem: Permission denied\n", 1);
 	else if (flag > 1 && access(path, W_OK) == -1 && access(path, F_OK) == 0)
-		write(2, "error\n", 6);
+		ft_error("Minishem: Permission denied\n", 1);
 	if (flag == 0)
 		ft_heredoc(tmp, path);
 	if (flag == 1)

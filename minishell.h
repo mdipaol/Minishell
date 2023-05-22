@@ -6,7 +6,7 @@
 /*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:34:35 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/05/22 15:52:25 by mdi-paol         ###   ########.fr       */
+/*   Updated: 2023/05/22 17:44:10 by mdi-paol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ void	ft_export(char **full_cmd, char ***envp);
 void	ft_unset(char **cmd, char ***envp);
 void	ft_handler_sigint(int sig);
 void	ft_exit(char **cmd, t_data *data);
-void	ft_error(char *str, int	error);
+void	ft_error(char *str, int error);
 int		ft_numstr(char *str);
+void	ft_free_all(t_data *data);
+
 #endif

@@ -6,7 +6,7 @@
 /*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:16:21 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/05/22 15:47:01 by mdi-paol         ###   ########.fr       */
+/*   Updated: 2023/05/22 19:19:05 by mdi-paol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,10 @@ int	main(int argc, char **argv, char **envp)
 		{
 			ft_split_all(&data, s);
 			ft_execution_manager(&data);
+			ft_free_all(&data);
 		}
 	}
+	//ft_free_all(&data);
 	write(1, "exit\n", 5);
 	exit(g_status);
 }

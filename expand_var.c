@@ -6,11 +6,13 @@
 /*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 10:14:33 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/05/22 11:03:14 by mdi-paol         ###   ########.fr       */
+/*   Updated: 2023/05/22 18:36:54 by mdi-paol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+extern int	g_status;
 
 char	*ft_fill_var(char *var, char *s, char *check)
 {
@@ -47,31 +49,40 @@ char	*ft_final_fill(char *original, char *new, int dollar, char *var)
 		{
 			while (var[k])
 				new[j++] = var[k++];
-			i += ft_strlen_var(original + i + 1, "|\"\'$?>< ") + 1;
+			i += ft_strlen_var(original + i + 1, "|\"\'$>< ") + 1;
 			flag = 1;
 		}
 	}
+	free(original);
 	return (new);
 }
 
-int	ft_create_str_var(t_data *data, int i, int j)
+int	ft_create_str_var(t_data *data, int i, int j, int flag)
 {
 	char	*var;
 	char	*s;
 
 	var = malloc(sizeof(char) * \
-	ft_strlen_var(data->cmd_trim[i] + j + 1, "|\"\'$?>< ") + 1);
-	var = ft_fill_var(var, data->cmd_trim[i] + j + 1, "|\"\'$?>< ");
+	ft_strlen_var(data->cmd_trim[i] + j + 1, "|\"\'$>< ") + 1);
+	var = ft_fill_var(var, data->cmd_trim[i] + j + 1, "|\"\'$>< ");
 	var = getenv(var);
+	if (data->cmd_trim[i][j + 1] == '?')
+	{
+		var = ft_itoa(g_status);
+		flag = 1;
+	}
 	if (!var)
 	{
 		var = malloc(1);
 		var[0] = '\0';
+		flag = 1;
 	}
 	s = malloc(sizeof(char) * ft_strlen(var) + ft_strlen(data->cmd_trim[i]) - \
-	ft_strlen_var(data->cmd_trim[i] + j + 1, "|\"\'$?>< "));
+	ft_strlen_var(data->cmd_trim[i] + j + 1, "|\"\'$>< "));
 	data->cmd_trim[i] = ft_final_fill(data->cmd_trim[i], s, j, var);
 	j += ft_strlen(var) - 1;
+	if (flag)
+		free(var);
 	return (j);
 }
 
@@ -90,7 +101,7 @@ char	**ft_expand(t_data *data)
 			if (data->cmd_trim[i][j] == '\'')
 				j = quote_skipper(data->cmd_trim[i], j);
 			if (data->cmd_trim[i][j] == '$')
-				j = ft_create_str_var(data, i, j);
+				j = ft_create_str_var(data, i, j, 0);
 			j++;
 		}
 		i++;
