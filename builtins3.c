@@ -3,14 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   builtins3.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alegreci <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 18:47:21 by alegreci          #+#    #+#             */
-/*   Updated: 2023/05/18 19:21:38 by alegreci         ###   ########.fr       */
+/*   Updated: 2023/05/22 15:58:19 by mdi-paol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+extern int	g_status;
+
+void	ft_exit(char **cmd, t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (cmd[i])
+		i++;
+	if (i == 1)
+		ft_error(NULL, 0);
+	else if (i > 2)
+		ft_error("exit: too many arguments\n", 1);
+	else if (i == 2)
+	{
+		if (!ft_numstr(cmd[1]))
+			ft_error("exit: numeric argument required\n", 2);
+		else
+			ft_error(NULL, ft_atoi(cmd[1]) % 256);
+	}
+	if (i <= 2)
+		data->run = 0;
+}
 
 int	ft_check_unset(char **envp, int i, char *cmd)
 {

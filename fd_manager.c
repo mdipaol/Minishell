@@ -6,33 +6,13 @@
 /*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 17:11:16 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/05/15 16:00:36 by mdi-paol         ###   ########.fr       */
+/*   Updated: 2023/05/22 15:46:50 by mdi-paol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/* int	ft_get_str_heredoc(char *str, int flag)
-{
-	int		fd;
-	char	*heredoc;
-	int		i;
-
-	i = 0;
-	fd = open("/tmp/.heredoc", O_RDONLY);
-	while (i < flag)
-	{
-		heredoc = get_next_line(fd);
-		i++;
-	}
-	if (ft_strncmp(str, heredoc, ft_strlen(str)) == 0)
-	{
-		close(fd);
-		return (1);
-	}
-	close(fd);
-	return (0);
-} */
+extern int	g_status;
 
 void	ft_heredoc(t_cmd *tmp, char *path)
 {

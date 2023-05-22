@@ -6,7 +6,7 @@
 /*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 16:57:57 by alegreci          #+#    #+#             */
-/*   Updated: 2023/05/16 16:58:17 by mdi-paol         ###   ########.fr       */
+/*   Updated: 2023/05/22 12:21:00 by mdi-paol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	*ft_full_path_finder(char **full_cmd, char **path)
 		tmp = ft_strjoin(path[i], "/");
 		cmd = ft_strjoin(tmp, full_cmd[0]);
 		free(tmp);
-		if (access(cmd, F_OK) == 0)
+		if (access(cmd, X_OK) == 0)
 			break ;
 		i++;
 		free(cmd);

@@ -3,14 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   utils1.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alegreci <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 17:31:34 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/05/17 15:50:27 by alegreci         ###   ########.fr       */
+/*   Updated: 2023/05/22 16:06:22 by mdi-paol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+extern int	g_status;
+
+int	ft_numstr(char *str)
+{
+	int	i;
+
+	i = 0;
+	if (str[i] == '+' || str[i] == '-')
+		i++;
+	while (str[i])
+	{
+		if (!ft_isdigit(str[i]))
+			return (0);
+		i++;
+	}
+	return (1);
+}
 
 int	ft_char_counter(char *s, char c)
 {
@@ -49,4 +67,12 @@ int	ft_strlen_var(char *s, char *check)
 		i++;
 	}
 	return (count);
+}
+
+void	ft_error(char *str, int error)
+{
+	g_status = error;
+
+	if (str)
+		write(2, str, ft_strlen(str));
 }

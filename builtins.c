@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alegreci <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 12:06:20 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/05/18 19:13:45 by alegreci         ###   ########.fr       */
+/*   Updated: 2023/05/22 14:51:11 by mdi-paol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	ft_env(char **envp)
 	}
 }
 
-void	ft_builtin(t_cmd *tmp, char ***envp)
+void	ft_builtin(t_cmd *tmp, char ***envp, t_data *data)
 {
 	if (ft_strncmp(tmp->full_cmd[0], "echo", 5) == 0)
 		ft_echo(tmp->full_cmd);
@@ -77,8 +77,8 @@ void	ft_builtin(t_cmd *tmp, char ***envp)
 		ft_unset(tmp->full_cmd, envp);
 	else if (ft_strncmp(tmp->full_cmd[0], "env", 3) == 0)
 		ft_env(*envp);
-/* 	else if (ft_strncmp(tmp->full_cmd, "exit", 4) == 0)
-		ft_exit(tmp); */
+	else if (ft_strncmp(tmp->full_cmd[0], "exit", 4) == 0)
+		ft_exit(tmp->full_cmd, data);
 }
 
 int	ft_is_builtin(char *full_cmd)

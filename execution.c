@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alegreci <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 16:33:32 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/05/18 18:39:24 by alegreci         ###   ########.fr       */
+/*   Updated: 2023/05/22 15:58:26 by mdi-paol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	ft_pipe(t_cmd *tmp)
 	tmp->next->in_fd = fd[0];
 }
 
-void	ft_exec(t_cmd *tmp, char ***envp)
+void	ft_exec(t_cmd *tmp, char ***envp, t_data *data)
 {
 	pid_t	pid;
 	int		std[2];
@@ -71,14 +71,17 @@ void	ft_exec(t_cmd *tmp, char ***envp)
 	ft_save_std(std, 0);
 	ft_check_redirect(tmp);
 	if (ft_is_builtin(tmp->full_cmd[0]))
-		ft_builtin(tmp, envp);
+		ft_builtin(tmp, envp, data);
 	pid = fork();
 	if (pid == 0)
 	{
-		if (ft_is_builtin(tmp->full_cmd[0]))
+		if (!tmp->full_path || ft_is_builtin(tmp->full_cmd[0]))
 			exit(0);
 		execve(tmp->full_path, tmp->full_cmd, *envp);
+		exit(0);
 	}
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 	ft_save_std(std, 1);
 	if (tmp->out_fd != 1)
 		close(tmp->out_fd);
@@ -96,7 +99,7 @@ void	ft_execution_manager(t_data	*data)
 	{
 		if (tmp->next)
 			ft_pipe(tmp);
-		ft_exec(tmp, &data->envp);
+		ft_exec(tmp, &data->envp, data);
 		tmp = tmp->next;
 	}
 }
