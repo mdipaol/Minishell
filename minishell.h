@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alegreci <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:34:35 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/05/18 19:12:48 by alegreci         ###   ########.fr       */
+/*   Updated: 2023/05/22 11:11:05 by mdi-paol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@
 # include <readline/history.h>
 # include <sys/types.h>
 # include <sys/wait.h>
-
+# include <signal.h>
+# include <sys/ioctl.h>
 
 typedef struct s_cmd
 {
@@ -65,5 +66,6 @@ int		ft_char_counter(char *s, char c);
 void	ft_cd(char **full_cmd, char **envp);
 void	ft_export(char **full_cmd, char ***envp);
 void	ft_unset(char **cmd, char ***envp);
+void	ft_handler_sigint(int sig);
 
 #endif
