@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_nodes.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: alegreci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 16:22:15 by alegreci          #+#    #+#             */
-/*   Updated: 2023/05/22 19:15:18 by mdi-paol         ###   ########.fr       */
+/*   Updated: 2023/05/23 16:43:56 by alegreci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,21 +69,21 @@ void	ft_node_init(t_cmd **head, int n, char ***all_cmd)
 	i = 1;
 	*head = malloc(sizeof(t_cmd));
 	tmp = *head;
-	(*head)->in_fd = 0;
-	(*head)->out_fd = 1;
-	(*head)->full_cmd = all_cmd[0];
-	(*head)->next = NULL;
+	tmp->in_fd = 0;
+	tmp->out_fd = 1;
+	tmp->full_cmd = all_cmd[0];
+	tmp->next = NULL;
 	while (i < n)
 	{
-		(*head)->next = malloc(sizeof(t_cmd));
-		*head = (*head)->next;
-		(*head)->in_fd = 0;
-		(*head)->out_fd = 1;
-		(*head)->full_cmd = all_cmd[i];
-		(*head)->next = NULL;
+		tmp->next = malloc(sizeof(t_cmd));
+		tmp = tmp->next;
+		tmp->in_fd = 0;
+		tmp->out_fd = 1;
+		tmp->full_cmd = all_cmd[i];
+		tmp->next = NULL;
 		i++;
 	}
-	*head = tmp;
+	/* *head = tmp; */
 }
 
 int	ft_count_nodes(char **s)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: alegreci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 18:53:47 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/05/22 19:08:23 by mdi-paol         ###   ########.fr       */
+/*   Updated: 2023/05/23 16:58:55 by alegreci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,9 @@ void	ft_free_all(t_data *data)
 		free(tmp);
 		tmp = tmp2;
 	}
-	ft_free_all_2(data);
-	if (data->cmds)
-		free (data->cmds);
+
+/* 	ft_free_all_2(data); */
+	//if (data->cmds)
+	free (data->cmds);
 	unlink("/tmp/.heredoc");
 }

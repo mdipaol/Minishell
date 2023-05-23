@@ -6,7 +6,7 @@
 /*   By: alegreci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 16:33:32 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/05/23 15:42:08 by alegreci         ###   ########.fr       */
+/*   Updated: 2023/05/23 18:13:22 by alegreci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,20 +69,21 @@ void	ft_exec(t_cmd *tmp, char ***envp, t_data *data)
 	pid_t	pid;
 	int		std[2];
 
-	if (!tmp->full_path)
-		g_status = 127;
 	if (!tmp->full_cmd[0])
 		return ;
 	if (pipe(std) == -1)
 		ft_error("Minishem: error creating pipe\n", 1);
 	ft_save_std(std, 0);
 	ft_check_redirect(tmp);
+	if (!tmp->full_path)
+		g_status = 127;
+	else
+		g_status = 0;
 	if (ft_is_builtin(tmp->full_cmd[0]))
 		ft_builtin(tmp, envp, data);
 	pid = fork();
 	if (pid < 0)
 		ft_error ("Minishem: fork failed\n", 1);
-	g_status = 0;
 	if (pid == 0)
 	{
 		if (!tmp->full_path || ft_is_builtin(tmp->full_cmd[0]))
