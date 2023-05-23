@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   builtins2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: alegreci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 18:27:04 by alegreci          #+#    #+#             */
-/*   Updated: 2023/05/22 17:07:57 by mdi-paol         ###   ########.fr       */
+/*   Updated: 2023/05/23 15:13:17 by alegreci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+extern int	g_status;
 
 char	**ft_set_export(char *cmd, char **envp, int i, int id)
 {
@@ -24,7 +26,7 @@ char	**ft_set_export(char *cmd, char **envp, int i, int id)
 	{
 		if (!ft_strncmp(cmd, envp[i], id + 1))
 		{
-			envp[i] = cmd;
+			envp[i] = ft_strdup(cmd);
 			return (envp);
 		}
 		i++;
@@ -36,7 +38,7 @@ char	**ft_set_export(char *cmd, char **envp, int i, int id)
 		new_envp[i] = envp[i];
 		i++;
 	}
-	new_envp[i++] = cmd;
+	new_envp[i++] = ft_strdup(cmd);
 	new_envp[i] = NULL;
 	return (new_envp);
 }
@@ -44,7 +46,9 @@ char	**ft_set_export(char *cmd, char **envp, int i, int id)
 void	ft_export(char **full_cmd, char ***envp)
 {
 	int	i;
+	int	err;
 
+	err = 0;
 	i = 1;
 	if (!full_cmd[1])
 		return ;
@@ -53,12 +57,17 @@ void	ft_export(char **full_cmd, char ***envp)
 		if (ft_strchr(full_cmd[i], '='))
 		{
 			if (full_cmd[i][0] == '=')
+			{
 				ft_error("export: '=': not a valid identifier\n", 1);
+				err = 1;
+			}
 			else
 				*envp = ft_set_export(full_cmd[i], *envp, i, 0);
 		}
 		i++;
 	}
+	if (!err)
+		g_status = 0;
 }
 
 void	ft_set_env(char *old_pwd, char **envp)
@@ -111,4 +120,5 @@ void	ft_cd(char **full_cmd, char **envp)
 	ft_chdir(s, pwd);
 	ft_set_env(pwd, envp);
 	free(pwd);
+	g_status = 0;
 }

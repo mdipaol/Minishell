@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: alegreci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 16:33:32 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/05/22 18:13:31 by mdi-paol         ###   ########.fr       */
+/*   Updated: 2023/05/23 15:42:08 by alegreci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+extern int	g_status;
 
 void	ft_save_std(int *std, int flag)
 {
@@ -67,6 +69,8 @@ void	ft_exec(t_cmd *tmp, char ***envp, t_data *data)
 	pid_t	pid;
 	int		std[2];
 
+	if (!tmp->full_path)
+		g_status = 127;
 	if (!tmp->full_cmd[0])
 		return ;
 	if (pipe(std) == -1)
@@ -78,6 +82,7 @@ void	ft_exec(t_cmd *tmp, char ***envp, t_data *data)
 	pid = fork();
 	if (pid < 0)
 		ft_error ("Minishem: fork failed\n", 1);
+	g_status = 0;
 	if (pid == 0)
 	{
 		if (!tmp->full_path || ft_is_builtin(tmp->full_cmd[0]))

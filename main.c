@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: alegreci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:16:21 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/05/22 19:19:05 by mdi-paol         ###   ########.fr       */
+/*   Updated: 2023/05/23 12:26:50 by alegreci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	ft_initialize(t_data *data)
 	printf("\n\n\n");
 	data->run = 1;
 	data->split_error = 0;
+	g_status = 0;
 }
 
 int	main(int argc, char **argv, char **envp)

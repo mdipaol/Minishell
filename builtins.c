@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: alegreci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 12:06:20 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/05/22 14:51:11 by mdi-paol         ###   ########.fr       */
+/*   Updated: 2023/05/23 14:53:52 by alegreci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+extern int	g_status;
 
 void	ft_pwd(void)
 {
@@ -21,6 +23,7 @@ void	ft_pwd(void)
 	write(1, s, ft_strlen(s));
 	write(1, "\n", 1);
 	free(s);
+	g_status = 0;
 }
 
 void	ft_echo(char **full_cmd)
@@ -48,6 +51,7 @@ void	ft_echo(char **full_cmd)
 	}
 	if (new)
 		write(1, "\n", 1);
+	g_status = 0;
 }
 
 void	ft_env(char **envp)
@@ -61,6 +65,7 @@ void	ft_env(char **envp)
 		write(1, "\n", 1);
 		i++;
 	}
+	g_status = 0;
 }
 
 void	ft_builtin(t_cmd *tmp, char ***envp, t_data *data)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins3.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: alegreci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 18:47:21 by alegreci          #+#    #+#             */
-/*   Updated: 2023/05/22 15:58:19 by mdi-paol         ###   ########.fr       */
+/*   Updated: 2023/05/23 15:00:14 by alegreci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,4 +85,5 @@ void	ft_unset(char **cmd, char ***envp)
 		*envp = ft_unset_envp(cmd[i], *envp, 0);
 		i++;
 	}
+	g_status = 0;
 }
