@@ -6,7 +6,7 @@
 /*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 18:53:47 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/05/24 12:36:21 by mdi-paol         ###   ########.fr       */
+/*   Updated: 2023/05/24 18:30:44 by mdi-paol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	ft_free_all(t_data *data)
 		i = 0;
 		while (tmp->full_cmd && tmp->full_cmd[i])
 		{
-			free(tmp->full_cmd[i]);
+		//	free(tmp->full_cmd[i]);
 			i++;
 		}
 		if (tmp->full_cmd)

@@ -6,7 +6,7 @@
 /*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:38:36 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/05/22 19:07:40 by mdi-paol         ###   ########.fr       */
+/*   Updated: 2023/05/24 18:25:48 by mdi-paol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@ static int	word_counter(char const *s, char c, int i, int flag)
 		{
 			q = s[i];
 			i++;
-			count++;
+			//count++;
 			while (s[i] != q)
 				i++;
-			flag = 0;
+			//flag = 0;
 		}
 		if (s[i] != c && flag == 0 && s[i] != '\"' && s[i] != '\'')
 		{
@@ -38,33 +38,48 @@ static int	word_counter(char const *s, char c, int i, int flag)
 			flag = 0;
 		i++;
 	}
+	//printf("%d\n", count);
 	return (count);
 }
 
-static char	*word_creator(char const *s, char c, int start)
+static char	*word_creator(char *s, char c, int start)
 {
 	char	*newword;
 	int		i;
 	int		startcpy;
+	char	q;
 
 	i = 0;
 	startcpy = start;
-	while (s[start] != c && s[start] != '\0' && s[start] != '\"' \
-	&& s[start] != '\'')
+	while (s[start] && s[start] != c)
 	{
-		i++;
-		start++;
+		if (s[start] == '\'' || s[start] == '\"')
+		{
+			i += quote_skipper(s, start) - start;
+			start = quote_skipper(s, start);
+		}
+		else
+		{
+			i++;
+			start++;
+		}
 	}
 	newword = malloc (sizeof(char) * i + 1);
 	i = 0;
 	if (!newword)
 		return (NULL);
-	while (s[startcpy] != c && s[startcpy] != '\0' && s[startcpy] != '\"' \
-	&& s[startcpy] != '\'' )
+	while (s[startcpy] && s[startcpy] != c)
 	{
-		newword[i] = s[startcpy];
-		i++;
-		startcpy++;
+		if (s[startcpy] == '\'' || s[startcpy] == '\"')
+		{
+			q = s[startcpy];
+			newword[i++] = s[startcpy++];
+			while (s[startcpy] != q)
+				newword[i++] = s[startcpy++];
+			newword[i++] = s[startcpy++];
+		}
+		else
+			newword[i++] = s[startcpy++];
 	}
 	newword[i] = '\0';
 	return (newword);
@@ -77,17 +92,23 @@ char	**ft_cmdtrim_helper(char *s, int i, int b, char **final)
 	flag = 0;
 	while (s[i])
 	{
-		if (s[i] == '\"' || s[i] == '\'')
+		/* if (s[i] == '\"' || s[i] == '\'')
 		{
 			final[b] = quote_inserter(s, i);
 			b++;
 			i = quote_skipper(s, i) - 1;
 			flag = 0;
-		}
-		else if (s[i] != ' ' && flag == 0 && s[i])
+		} */
+		if (s[i] != ' ' && flag == 0 && s[i])
 		{
 			final[b] = word_creator(s, ' ', i);
 			b++;
+			while (s[i] && s[i] != ' ')
+			{
+				if (s[i] == '\"' || s[i] == '\'')
+					i = quote_skipper(s, i) - 1;
+				i++;
+			}
 			flag = 1;
 		}
 		if (s[i] == ' ')

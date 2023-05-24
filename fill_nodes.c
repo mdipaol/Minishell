@@ -6,7 +6,7 @@
 /*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 16:22:15 by alegreci          #+#    #+#             */
-/*   Updated: 2023/05/24 15:24:44 by mdi-paol         ###   ########.fr       */
+/*   Updated: 2023/05/24 17:07:16 by mdi-paol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void	ft_node_init(t_cmd **head, int n, char ***all_cmd)
 	/* *head = tmp; */
 }
 
-int	ft_count_nodes(char **s)
+int	ft_count_nodes(char **s, t_data *data)
 {
 	int	count;
 	int	i;
@@ -96,11 +96,12 @@ int	ft_count_nodes(char **s)
 	flag = 0;
 	i = 0;
 	count = 1;
+	data->pipe_stop = 0;
 	while (s[i])
 	{
 		if (ft_strchr(s[i], '|'))
 		{
-			if ((!s[i + 1] || ft_strchr(s[i + 1], '|')) && !flag)
+			if ((!s[i + 1] || ft_strchr(s[i + 1], '|') || s[0][0] == '|') && !flag)
 			{
 				ft_error(\
 				"Minishem: syntax error near unexpected token '|'\n", 1);
@@ -110,6 +111,8 @@ int	ft_count_nodes(char **s)
 		}
 		i++;
 	}
+	if (s[0][0] == '|')
+		data->pipe_stop = 1;
 	return (count);
 }
 
@@ -120,7 +123,7 @@ t_cmd	**ft_fill_nodes(t_data *data)
 	char	***all_cmd;
 
 	head = malloc(sizeof(t_cmd *));
-	cmd_n = ft_count_nodes(data->cmd_trim);
+	cmd_n = ft_count_nodes(data->cmd_trim, data);
 	all_cmd = malloc(sizeof(char **) * (cmd_n + 1));
 	ft_all_cmd_init(all_cmd, cmd_n, data->cmd_trim);
 	all_cmd = ft_fill_all_cmd(all_cmd, cmd_n, data->cmd_trim);

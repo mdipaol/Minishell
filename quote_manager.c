@@ -6,7 +6,7 @@
 /*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 18:38:22 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/05/22 17:08:55 by mdi-paol         ###   ########.fr       */
+/*   Updated: 2023/05/24 17:55:17 by mdi-paol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,9 @@ int	quote_skipper(char *s, int start)
 	char	c;
 
 	c = s[start];
-	start++;
-	while (s[start] != c)
+	if (s[start])
+		start++;
+	while (s[start] && s[start] != c)
 		start++;
 	start++;
 	return (start);

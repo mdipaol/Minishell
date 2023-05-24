@@ -6,7 +6,7 @@
 /*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 16:33:32 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/05/24 16:37:33 by mdi-paol         ###   ########.fr       */
+/*   Updated: 2023/05/24 17:06:23 by mdi-paol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,10 +76,10 @@ void	ft_exec(t_cmd *tmp, char ***envp, t_data *data)
 		ft_error("Minishem: error creating pipe\n", 1);
 	ft_save_std(std, 0);
 	ft_check_redirect(tmp);
-	if (!tmp->full_path)
+	/* if (!tmp->full_path)
 		g_status = 127;
 	else
-		g_status = 0;
+		g_status = 0; */
 	if (ft_is_builtin(tmp->full_cmd[0]))
 		ft_builtin(tmp, envp, data);
 	pid = fork();
@@ -88,11 +88,10 @@ void	ft_exec(t_cmd *tmp, char ***envp, t_data *data)
 	if (pid == 0)
 	{
 		if (!tmp->full_path || ft_is_builtin(tmp->full_cmd[0]))
-			exit(0);
+			exit(g_status);
 		execve(tmp->full_path, tmp->full_cmd, *envp);
-		exit(0);
+		exit(g_status);
 	}
-
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
 	ft_save_std(std, 1);
@@ -103,13 +102,14 @@ void	ft_exec(t_cmd *tmp, char ***envp, t_data *data)
 	waitpid(pid, &child_status, 0);
 	if (WIFEXITED(child_status))
 		g_status = WEXITSTATUS(child_status);
-
 }
 
 void	ft_execution_manager(t_data	*data)
 {
 	t_cmd	*tmp;
 
+	if (data->pipe_stop)
+		return ;
 	tmp = *data->cmds;
 	while (tmp)
 	{

@@ -6,7 +6,7 @@
 /*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 16:57:57 by alegreci          #+#    #+#             */
-/*   Updated: 2023/05/24 15:12:12 by mdi-paol         ###   ########.fr       */
+/*   Updated: 2023/05/24 16:50:43 by mdi-paol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,10 @@ char	*ft_full_path_finder(char **full_cmd, char **path)
 	{
 		if (access(full_cmd[0], X_OK) == 0)
 			return (full_cmd[0]);
-		ft_error("Minishell: No such file or directory\n", 127);
+		if (access(full_cmd[0], F_OK) == -1)
+			ft_error("Minishell: No such file or directory\n", 127);
+		else if (access(full_cmd[0], X_OK) == -1)
+			ft_error("Minishell: Permission denied\n", 126);
 		return (NULL);
 	}
 	while (path[i])

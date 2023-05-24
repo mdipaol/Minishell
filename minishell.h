@@ -6,7 +6,7 @@
 /*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:34:35 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/05/24 16:03:16 by mdi-paol         ###   ########.fr       */
+/*   Updated: 2023/05/24 17:04:59 by mdi-paol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@
 # include <sys/wait.h>
 # include <signal.h>
 # include <sys/ioctl.h>
-# include <errno.h>
 
 typedef struct s_cmd
 {
@@ -43,6 +42,7 @@ typedef struct s_data
 	char	**cmd_trim;
 	char	**expand;
 	char	**envp;
+	int		pipe_stop;
 }	t_data;
 
 void	ft_redirection(t_cmd **head);
