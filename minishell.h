@@ -6,7 +6,7 @@
 /*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:34:35 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/05/24 12:37:37 by mdi-paol         ###   ########.fr       */
+/*   Updated: 2023/05/24 16:03:16 by mdi-paol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <sys/wait.h>
 # include <signal.h>
 # include <sys/ioctl.h>
+# include <errno.h>
 
 typedef struct s_cmd
 {

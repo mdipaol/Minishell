@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fd_manager.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alegreci <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 17:11:16 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/05/23 15:26:33 by alegreci         ###   ########.fr       */
+/*   Updated: 2023/05/24 14:57:53 by mdi-paol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	ft_heredoc(t_cmd *tmp, char *path)
 	int		i;
 	int		flag;
 
+	g_status = 0;
 	flag = 0;
 	unlink("/tmp/.heredoc");
 	tmp->in_fd = open("/tmp/.heredoc", O_CREAT | O_RDWR | O_APPEND, 0666);
@@ -34,12 +35,17 @@ void	ft_heredoc(t_cmd *tmp, char *path)
 		flag++;
 		i = ft_strlen(std_in);
 		std_in[i] = '\n';
-		if(!ft_strncmp(path, std_in, ft_strlen(path)))
+		if (!ft_strncmp(path, std_in, ft_strlen(path)))
 			break ;
 		write(tmp->in_fd, std_in, ft_strlen(std_in));
 	}
 	close (tmp->in_fd);
 	tmp->in_fd = open("/tmp/.heredoc", O_RDONLY);
+	if (g_status == 130)
+	{
+		close (tmp->in_fd);
+		tmp->in_fd = -1;
+	}
 }
 
 char	*ft_obtain_path(char **full_cmd, int flag)
