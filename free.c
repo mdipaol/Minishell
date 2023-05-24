@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alegreci <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 18:53:47 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/05/23 16:58:55 by alegreci         ###   ########.fr       */
+/*   Updated: 2023/05/24 12:36:21 by mdi-paol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,63 @@ void	ft_free_all(t_data *data)
 	//if (data->cmds)
 	free (data->cmds);
 	unlink("/tmp/.heredoc");
+}
+
+int	ft_free_redirect_count(char **full_cmd, int	i, int n)
+{
+	if (n == 3)
+	{
+		free(full_cmd[i]);
+		free(full_cmd[i + 1]);
+		free(full_cmd[i + 2]);
+		return (i + 3);
+	}
+	if (n == 2)
+	{
+		free(full_cmd[i]);
+		free(full_cmd[i + 1]);
+		return (i + 2);
+	}
+	return (i);
+}
+
+void	ft_free_redirect(char **full_cmd)
+{
+	int	i;
+
+	i = 0;
+	while (full_cmd[i])
+	{
+		if (full_cmd[i][0] == '<' && full_cmd[i + 1] && full_cmd[i + 1][0] == '<')
+			i = ft_free_redirect_count(full_cmd, i, 3);
+		else if (full_cmd[i][0] == '<')
+			i = ft_free_redirect_count(full_cmd, i, 2);
+		else if (full_cmd[i][0] == '>' && full_cmd[i + 1] && full_cmd[i + 1][0] == '>')
+			i = ft_free_redirect_count(full_cmd, i, 3);
+		else if (full_cmd[i][0] == '>')
+			i = ft_free_redirect_count(full_cmd, i, 2);
+		else
+			i++;
+	}
+}
+
+t_cmd	*ft_free_nodes(t_cmd *cmd)
+{
+	t_cmd	*tmp;
+	int	i;
+
+	i = 0;
+	tmp = cmd;
+	cmd = cmd->next;
+	while (tmp->full_cmd && tmp->full_cmd[i])
+	{
+		free(tmp->full_cmd[i]);
+		i++;
+	}
+	if (tmp->full_cmd)
+		free(tmp->full_cmd);
+	if (tmp->full_path)
+		free(tmp->full_path);
+	free(tmp);
+	return (cmd);
 }

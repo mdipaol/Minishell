@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alegreci <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 16:33:32 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/05/23 18:13:22 by alegreci         ###   ########.fr       */
+/*   Updated: 2023/05/24 12:06:28 by mdi-paol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,14 +108,14 @@ void	ft_execution_manager(t_data	*data)
 	tmp = *data->cmds;
 	while (tmp)
 	{
-		if (tmp->in_fd < 0 || tmp->out_fd < 0)
-			tmp = tmp->next;
-		else
+		if (tmp->in_fd >= 0 && tmp->out_fd >= 0)
 		{
 			if (tmp->next)
 				ft_pipe(tmp);
 			ft_exec(tmp, &data->envp, data);
-			tmp = tmp->next;
 		}
+		tmp = tmp->next;
+		//tmp = ft_free_nodes(tmp);
 	}
+
 }

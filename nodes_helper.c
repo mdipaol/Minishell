@@ -6,7 +6,7 @@
 /*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 11:34:45 by alegreci          #+#    #+#             */
-/*   Updated: 2023/05/22 18:39:53 by mdi-paol         ###   ########.fr       */
+/*   Updated: 2023/05/24 12:37:19 by mdi-paol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,8 @@ char	**ft_cmd_cleaner(char **full_cmd)
 		else
 			new[j++] = full_cmd[i++];
 	}
+	ft_free_redirect(full_cmd);
+	free (full_cmd);
 	return (new);
 }
 

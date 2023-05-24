@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_nodes.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alegreci <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 16:22:15 by alegreci          #+#    #+#             */
-/*   Updated: 2023/05/23 16:43:56 by alegreci         ###   ########.fr       */
+/*   Updated: 2023/05/24 12:11:55 by mdi-paol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,11 @@ char	***ft_fill_all_cmd(char ***all, int n, char **trim)
 			k++;
 			j++;
 		}
+		if (trim[j] && trim[j][0] == '|')
+			free(trim[j]);
 		i++;
 		j++;
 	}
-
 	return (all);
 }
 
@@ -68,7 +69,7 @@ void	ft_node_init(t_cmd **head, int n, char ***all_cmd)
 
 	i = 1;
 	*head = malloc(sizeof(t_cmd));
-	tmp = *head;
+ 	tmp = *head;
 	tmp->in_fd = 0;
 	tmp->out_fd = 1;
 	tmp->full_cmd = all_cmd[0];
