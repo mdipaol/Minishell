@@ -6,7 +6,7 @@
 /*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 17:11:16 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/05/24 14:57:53 by mdi-paol         ###   ########.fr       */
+/*   Updated: 2023/05/25 16:03:00 by mdi-paol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,18 +67,20 @@ void	ft_obtain_fd(t_cmd *tmp, char *path, int flag)
 		close (tmp->in_fd);
 	else if ((flag == 2 || flag == 3) && tmp->out_fd > 2)
 		close (tmp->out_fd);
-	if (access(path, F_OK) == -1 && flag == 1)
+	if (!path)
+		ft_error("Minishem: syntax error near unexpected token `newline'\n", 2);
+	else if (access(path, F_OK) == -1 && flag == 1)
 		ft_error("Minishem: No such file or directory\n", 1);
 	else if (flag == 1 && access(path, R_OK) == -1)
 		ft_error("Minishem: Permission denied\n", 1);
 	else if (flag > 1 && access(path, W_OK) == -1 && access(path, F_OK) == 0)
 		ft_error("Minishem: Permission denied\n", 1);
-	if (flag == 0)
+	if (flag == 0 && path)
 		ft_heredoc(tmp, path);
-	if (flag == 1)
+	if (flag == 1 && path)
 		tmp->in_fd = open(path, O_RDONLY, 0666);
-	else if (flag == 2)
+	else if (flag == 2 && path)
 		tmp->out_fd = open(path, O_CREAT | O_WRONLY | O_APPEND, 0666);
-	else if (flag == 3)
+	else if (flag == 3 && path)
 		tmp->out_fd = open(path, O_CREAT | O_WRONLY | O_TRUNC, 0666);
 }

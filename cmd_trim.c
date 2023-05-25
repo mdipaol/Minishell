@@ -6,11 +6,13 @@
 /*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:38:36 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/05/24 18:25:48 by mdi-paol         ###   ########.fr       */
+/*   Updated: 2023/05/25 16:18:17 by mdi-paol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+extern int	g_status;
 
 static int	word_counter(char const *s, char c, int i, int flag)
 {
@@ -140,6 +142,7 @@ void	ft_split_all(t_data *data, char *s)
 		data->cmd_trim = ft_cmdtrim(data, s, ' ');
 		if (ft_strchr(s, '$'))
 			data->cmd_trim = ft_expand(data);
+		g_status = 0;
 		data->cmd_trim = ft_cmdsubsplit(data->cmd_trim);
 		data->cmd_trim = ft_quote_split(data->cmd_trim);
 		data->cmds = ft_fill_nodes(data);

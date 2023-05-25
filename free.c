@@ -6,7 +6,7 @@
 /*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 18:53:47 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/05/24 18:30:44 by mdi-paol         ###   ########.fr       */
+/*   Updated: 2023/05/25 16:10:16 by mdi-paol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,13 +82,15 @@ void	ft_free_redirect(char **full_cmd)
 	i = 0;
 	while (full_cmd[i])
 	{
-		if (full_cmd[i][0] == '<' && full_cmd[i + 1] && full_cmd[i + 1][0] == '<')
+		if (!ft_strncmp(full_cmd[i], "<", 2) && full_cmd[i + 1] \
+		&& !ft_strncmp(full_cmd[i + 1], "<", 2) && full_cmd[i + 2])
 			i = ft_free_redirect_count(full_cmd, i, 3);
-		else if (full_cmd[i][0] == '<')
+		else if (!ft_strncmp(full_cmd[i], "<", 2) && full_cmd[i + 1])
 			i = ft_free_redirect_count(full_cmd, i, 2);
-		else if (full_cmd[i][0] == '>' && full_cmd[i + 1] && full_cmd[i + 1][0] == '>')
+		else if (!ft_strncmp(full_cmd[i], ">", 2) && full_cmd[i + 1] \
+		&& !ft_strncmp(full_cmd[i + 1], ">", 2) && full_cmd[i + 2])
 			i = ft_free_redirect_count(full_cmd, i, 3);
-		else if (full_cmd[i][0] == '>')
+		else if (!ft_strncmp(full_cmd[i], ">", 2) && full_cmd[i + 1])
 			i = ft_free_redirect_count(full_cmd, i, 2);
 		else
 			i++;

@@ -6,7 +6,7 @@
 /*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 11:34:45 by alegreci          #+#    #+#             */
-/*   Updated: 2023/05/24 12:37:19 by mdi-paol         ###   ########.fr       */
+/*   Updated: 2023/05/25 16:09:10 by mdi-paol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,21 +19,21 @@ void	ft_fd_manager(t_cmd *tmp, char **full_cmd)
 	i = 0;
 	while (full_cmd[i])
 	{
-		if (full_cmd[i][0] == '<' && full_cmd[i + 1] \
-		&& full_cmd[i + 1][0] == '<')
+		if (!ft_strncmp(full_cmd[i], "<", 2) && full_cmd[i + 1] \
+		&& !ft_strncmp(full_cmd[i + 1], "<", 2))
 		{
 			ft_get_fd(tmp, full_cmd + i, 0);
 			i++;
 		}
-		else if (full_cmd[i][0] == '<')
+		else if (!ft_strncmp(full_cmd[i], "<", 2))
 			ft_get_fd(tmp, full_cmd + i, 1);
-		else if (full_cmd[i][0] == '>' && full_cmd[i + 1] \
-		&& full_cmd[i + 1][0] == '>')
+		else if (!ft_strncmp(full_cmd[i], ">", 2) && full_cmd[i + 1] \
+		&& !ft_strncmp(full_cmd[i + 1], ">", 2))
 		{
 			ft_get_fd(tmp, full_cmd + i, 2);
 			i++;
 		}
-		else if (full_cmd[i][0] == '>')
+		else if (!ft_strncmp(full_cmd[i], ">", 2))
 			ft_get_fd(tmp, full_cmd + i, 3);
 		i++;
 	}
@@ -43,15 +43,15 @@ int	ft_cmd_clean_counter(char **full_cmd, int count, int i)
 {
 	while (full_cmd[i])
 	{
-		if (full_cmd[i][0] == '<' && full_cmd[i + 1] \
-		&& full_cmd[i + 1][0] == '<')
+		if (!ft_strncmp(full_cmd[i], "<", 2) && full_cmd[i + 1] \
+		&& !ft_strncmp(full_cmd[i + 1], "<", 2))
 			count++;
-		else if (full_cmd[i][0] == '<')
+		else if (!ft_strncmp(full_cmd[i], "<", 2))
 			count += 2;
-		else if (full_cmd[i][0] == '>' && full_cmd[i + 1] \
-		&& full_cmd[i + 1][0] == '>')
+		else if (!ft_strncmp(full_cmd[i], ">", 2) && full_cmd[i + 1] \
+		&& !ft_strncmp(full_cmd[i + 1], ">", 2))
 			count++;
-		else if (full_cmd[i][0] == '>')
+		else if (!ft_strncmp(full_cmd[i], ">", 2))
 			count += 2;
 		i++;
 	}
@@ -80,13 +80,15 @@ char	**ft_cmd_cleaner(char **full_cmd)
 	j = 0;
 	while (full_cmd[i])
 	{
-		if (full_cmd[i][0] == '<' && full_cmd[i + 1] && full_cmd[i + 1][0] == '<')
+		if (!ft_strncmp(full_cmd[i], "<", 2) && full_cmd[i + 1] \
+		&& !ft_strncmp(full_cmd[i + 1], "<", 2) && full_cmd[i + 2])
 			i += 3;
-		else if (full_cmd[i][0] == '<')
+		else if (!ft_strncmp(full_cmd[i], "<", 2) && full_cmd[i + 1])
 			i += 2;
-		else if (full_cmd[i][0] == '>' && full_cmd[i + 1] && full_cmd[i + 1][0] == '>')
+		else if (!ft_strncmp(full_cmd[i], ">", 2) && full_cmd[i + 1] \
+		&& !ft_strncmp(full_cmd[i + 1], ">", 2) && full_cmd[i + 2])
 			i += 3;
-		else if (full_cmd[i][0] == '>')
+		else if (!ft_strncmp(full_cmd[i], ">", 2) && full_cmd[i + 1])
 			i += 2;
 		else
 			new[j++] = full_cmd[i++];

@@ -6,7 +6,7 @@
 /*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 16:33:32 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/05/24 17:06:23 by mdi-paol         ###   ########.fr       */
+/*   Updated: 2023/05/25 16:18:42 by mdi-paol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,10 +76,6 @@ void	ft_exec(t_cmd *tmp, char ***envp, t_data *data)
 		ft_error("Minishem: error creating pipe\n", 1);
 	ft_save_std(std, 0);
 	ft_check_redirect(tmp);
-	/* if (!tmp->full_path)
-		g_status = 127;
-	else
-		g_status = 0; */
 	if (ft_is_builtin(tmp->full_cmd[0]))
 		ft_builtin(tmp, envp, data);
 	pid = fork();
@@ -108,7 +104,7 @@ void	ft_execution_manager(t_data	*data)
 {
 	t_cmd	*tmp;
 
-	if (data->pipe_stop)
+	if (data->pipe_stop || g_status == 2)
 		return ;
 	tmp = *data->cmds;
 	while (tmp)

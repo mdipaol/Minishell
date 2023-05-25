@@ -6,7 +6,7 @@
 /*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 16:22:15 by alegreci          #+#    #+#             */
-/*   Updated: 2023/05/24 17:07:16 by mdi-paol         ###   ########.fr       */
+/*   Updated: 2023/05/25 16:43:49 by mdi-paol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	ft_all_cmd_init(char ***all, int n, char **trim)
 	while (i < n)
 	{
 		k = 0;
-		while (trim[j] && trim[j][0] != '|')
+		while (trim[j] && ft_strncmp(trim[j], "|", 2))
 		{
 			k++;
 			j++;
@@ -48,13 +48,13 @@ char	***ft_fill_all_cmd(char ***all, int n, char **trim)
 	{
 
 		k = 0;
-		while (trim[j] && trim[j][0] != '|')
+		while (trim[j] && ft_strncmp(trim[j], "|", 2))
 		{
 			all[i][k] = trim[j];
 			k++;
 			j++;
 		}
-		if (trim[j] && trim[j][0] == '|')
+		if (trim[j] && !ft_strncmp(trim[j], "|", 2))
 			free(trim[j]);
 		i++;
 		j++;
@@ -99,9 +99,9 @@ int	ft_count_nodes(char **s, t_data *data)
 	data->pipe_stop = 0;
 	while (s[i])
 	{
-		if (ft_strchr(s[i], '|'))
+		if (!ft_strncmp(s[i], "|", 2))
 		{
-			if ((!s[i + 1] || ft_strchr(s[i + 1], '|') || s[0][0] == '|') && !flag)
+			if ((!s[i + 1] || !ft_strncmp(s[i + 1], "|", 2) || s[0][0] == '|') && !flag)
 			{
 				ft_error(\
 				"Minishem: syntax error near unexpected token '|'\n", 1);
