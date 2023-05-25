@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_subsplit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: alegreci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 17:36:04 by marvin@42.f       #+#    #+#             */
-/*   Updated: 2023/05/25 15:02:35 by mdi-paol         ###   ########.fr       */
+/*   Updated: 2023/05/25 17:36:39 by alegreci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*ft_strchr_quote(const char *s, int c)
 	while (a[i] != '\0')
 	{
 		if (a[i] == '\'' || a[i] == '\"')
-			i = quote_skipper((char *)s, i);
+			i = quote_skipper((char *)s, i) - 1;
 		if (a[i] == c)
 			return (&a[i]);
 		i++;
@@ -77,14 +77,19 @@ int	ft_wcounter(char **s, int i, int count, int flag)
 		j = 0;
 		while (s[i][j])
 		{
-			if (s[i][j] != '|' && s[i][j] != '>' && s[i][j] != '<' && flag == 1)
+			if (s[i][j] == '\"' || s[i][j] == '\'')
+			{
+				j = quote_skipper(s[i], j) - 1;
+				if (flag == 1)
+					count++;
+				flag = 0;
+			}
+			else if (s[i][j] != '|' && s[i][j] != '>' && s[i][j] != '<' && flag == 1)
 			{
 				count++;
 				flag = 0;
 			}
-			if (s[i][j] == '\"' || s[i][j] == '\'')
-				j = quote_skipper(s[i], j);
-			if (s[i][j] == '|' || s[i][j] == '>' || s[i][j] == '<')
+			else if (s[i][j] == '|' || s[i][j] == '>' || s[i][j] == '<')
 			{
 				count++;
 				flag = 1;
