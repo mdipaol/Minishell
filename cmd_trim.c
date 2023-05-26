@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_trim.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: alegreci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:38:36 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/05/25 16:18:17 by mdi-paol         ###   ########.fr       */
+/*   Updated: 2023/05/26 17:08:18 by alegreci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,10 @@ static int	word_counter(char const *s, char c, int i, int flag)
 		{
 			q = s[i];
 			i++;
-			//count++;
+			count++;
 			while (s[i] != q)
 				i++;
-			//flag = 0;
+			flag = 0;
 		}
 		if (s[i] != c && flag == 0 && s[i] != '\"' && s[i] != '\'')
 		{
@@ -143,6 +143,7 @@ void	ft_split_all(t_data *data, char *s)
 		if (ft_strchr(s, '$'))
 			data->cmd_trim = ft_expand(data);
 		g_status = 0;
+		data->cmd_trim = ft_safe_quotes(data->cmd_trim);
 		data->cmd_trim = ft_cmdsubsplit(data->cmd_trim);
 		data->cmd_trim = ft_quote_split(data->cmd_trim);
 		data->cmds = ft_fill_nodes(data);

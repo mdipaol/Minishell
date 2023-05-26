@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: alegreci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:34:35 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/05/24 17:04:59 by mdi-paol         ###   ########.fr       */
+/*   Updated: 2023/05/26 15:25:52 by alegreci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,5 +74,6 @@ int		ft_numstr(char *str);
 void	ft_free_all(t_data *data);
 t_cmd	*ft_free_nodes(t_cmd *cmd);
 void	ft_free_redirect(char **full_cmd);
-
+char	**ft_negative_restorer(char **cmd);
+char	**ft_safe_quotes(char **cmd);
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   nodes_helper.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: alegreci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 11:34:45 by alegreci          #+#    #+#             */
-/*   Updated: 2023/05/25 16:09:10 by mdi-paol         ###   ########.fr       */
+/*   Updated: 2023/05/26 15:48:51 by alegreci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ void	ft_redirection(t_cmd **head)
 	{
 		ft_fd_manager(tmp, tmp->full_cmd);
 		tmp->full_cmd = ft_cmd_cleaner(tmp->full_cmd);
+		tmp->full_cmd = ft_negative_restorer(tmp->full_cmd);
 		tmp->full_path = ft_full_path_finder(tmp->full_cmd, path);
 		tmp = tmp->next;
 	}
@@ -121,4 +122,3 @@ void	ft_redirection(t_cmd **head)
 	}
 	free(path);
 }
-
