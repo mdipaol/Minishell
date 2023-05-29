@@ -6,7 +6,7 @@
 /*   By: alegreci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 18:53:47 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/05/26 17:29:19 by alegreci         ###   ########.fr       */
+/*   Updated: 2023/05/29 16:35:16 by alegreci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	ft_free_all(t_data *data)
 	unlink("/tmp/.heredoc");
 }
 
-int	ft_free_redirect_count(char **full_cmd, int	i, int n)
+int	ft_free_redirect_count(char **full_cmd, int i, int n)
 {
 	if (n == 3)
 	{
@@ -102,7 +102,7 @@ void	ft_free_redirect(char **full_cmd)
 t_cmd	*ft_free_nodes(t_cmd *cmd)
 {
 	t_cmd	*tmp;
-	int	i;
+	int		i;
 
 	i = 0;
 	tmp = cmd;

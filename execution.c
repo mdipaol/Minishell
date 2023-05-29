@@ -6,7 +6,7 @@
 /*   By: alegreci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 16:33:32 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/05/26 15:51:54 by alegreci         ###   ########.fr       */
+/*   Updated: 2023/05/29 17:29:23 by alegreci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,8 @@ void	ft_pipe(t_cmd *tmp)
 	}
 	if (tmp->next->in_fd != 0)
 	{
-		dup2(tmp->next->in_fd, fd[0]);
-		close(tmp->next->in_fd);
+		tmp->out_fd = fd[1];
+		return;
 	}
 	tmp->out_fd = fd[1];
 	tmp->next->in_fd = fd[0];
