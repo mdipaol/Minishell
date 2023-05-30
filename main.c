@@ -6,7 +6,7 @@
 /*   By: alegreci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:16:21 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/05/26 17:02:05 by alegreci         ###   ########.fr       */
+/*   Updated: 2023/05/30 15:40:42 by alegreci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	ft_initialize(t_data *data)
 	printf("\n\n\n"); */
 	data->run = 1;
 	data->split_error = 0;
+	data->cmd_trim = NULL;
 	g_status = 0;
 }
 

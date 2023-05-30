@@ -6,7 +6,7 @@
 /*   By: alegreci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:38:36 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/05/26 17:08:18 by alegreci         ###   ########.fr       */
+/*   Updated: 2023/05/30 16:03:32 by alegreci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,13 +94,6 @@ char	**ft_cmdtrim_helper(char *s, int i, int b, char **final)
 	flag = 0;
 	while (s[i])
 	{
-		/* if (s[i] == '\"' || s[i] == '\'')
-		{
-			final[b] = quote_inserter(s, i);
-			b++;
-			i = quote_skipper(s, i) - 1;
-			flag = 0;
-		} */
 		if (s[i] != ' ' && flag == 0 && s[i])
 		{
 			final[b] = word_creator(s, ' ', i);
@@ -115,7 +108,8 @@ char	**ft_cmdtrim_helper(char *s, int i, int b, char **final)
 		}
 		if (s[i] == ' ')
 			flag = 0;
-		i++;
+		if(s[i])
+			i++;
 	}
 	final[b] = NULL;
 	return (final);

@@ -6,7 +6,7 @@
 /*   By: alegreci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 17:36:04 by marvin@42.f       #+#    #+#             */
-/*   Updated: 2023/05/25 17:36:39 by alegreci         ###   ########.fr       */
+/*   Updated: 2023/05/30 15:49:23 by alegreci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ char	**ft_cmdsubsplit(char **s)
 
 	i = 0;
 	j = 0;
-	final = malloc(sizeof(char *) * ft_wcounter(s, i, j, 1) + 1);
+	final = malloc(sizeof(char *) * (ft_wcounter(s, i, j, 1) + 1));
 	while (s[i])
 	{
 		if (!ft_strchr_quote(s[i], '|')
