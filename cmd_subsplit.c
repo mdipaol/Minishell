@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_subsplit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alegreci <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 17:36:04 by marvin@42.f       #+#    #+#             */
-/*   Updated: 2023/05/30 15:49:23 by alegreci         ###   ########.fr       */
+/*   Updated: 2023/05/30 18:10:51 by mdi-paol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,12 +70,10 @@ int	ft_string_splitter(char **final, int j, char *s, int i)
 
 int	ft_wcounter(char **s, int i, int count, int flag)
 {
-	int	j;
-
 	while (s[i])
 	{
-		j = 0;
-		while (s[i][j])
+		count = ft_wcounter_help(s, i, flag, count);
+/* 		while (s[i][j])
 		{
 			if (s[i][j] == '\"' || s[i][j] == '\'')
 			{
@@ -84,7 +82,8 @@ int	ft_wcounter(char **s, int i, int count, int flag)
 					count++;
 				flag = 0;
 			}
-			else if (s[i][j] != '|' && s[i][j] != '>' && s[i][j] != '<' && flag == 1)
+			else if (s[i][j] != '|' && s[i][j] != '>' && \
+			s[i][j] != '<' && flag == 1)
 			{
 				count++;
 				flag = 0;
@@ -95,7 +94,7 @@ int	ft_wcounter(char **s, int i, int count, int flag)
 				flag = 1;
 			}
 			j++;
-		}
+		} */
 		i++;
 		flag = 1;
 	}

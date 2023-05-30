@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alegreci <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 18:53:47 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/05/29 16:35:16 by alegreci         ###   ########.fr       */
+/*   Updated: 2023/05/30 17:55:20 by mdi-paol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	ft_free_all(t_data *data)
 		i = 0;
 		while (tmp->full_cmd && tmp->full_cmd[i])
 		{
-		//	free(tmp->full_cmd[i]);
+			free(tmp->full_cmd[i]);
 			i++;
 		}
 		if (tmp->full_cmd)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_var.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alegreci <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 10:14:33 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/05/26 16:46:54 by alegreci         ###   ########.fr       */
+/*   Updated: 2023/05/26 17:59:07 by mdi-paol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ char	*ft_final_fill(char *original, char *new, int dollar, char *var)
 			i += ft_strlen_var(original + i + 1, "|\"\'$>< ") + 1;
 			flag = 1;
 		}
+		else
+			i++;
 	}
 	new[j] = '\0';
 	free(original);
