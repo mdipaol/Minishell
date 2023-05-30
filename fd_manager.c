@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fd_manager.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: alegreci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 17:11:16 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/05/25 16:03:00 by mdi-paol         ###   ########.fr       */
+/*   Updated: 2023/05/30 16:32:51 by alegreci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ extern int	g_status;
 void	ft_heredoc(t_cmd *tmp, char *path)
 {
 	char	*std_in;
-	int		i;
+	//int		i;
 	int		flag;
 
 	g_status = 0;
@@ -33,11 +33,12 @@ void	ft_heredoc(t_cmd *tmp, char *path)
 			break ;
 		}
 		flag++;
-		i = ft_strlen(std_in);
-		std_in[i] = '\n';
-		if (!ft_strncmp(path, std_in, ft_strlen(path)))
+		//i = ft_strlen(std_in);
+		//std_in[i] = '\n';
+		if (!ft_strncmp(path, std_in, ft_strlen(path) + 1))
 			break ;
 		write(tmp->in_fd, std_in, ft_strlen(std_in));
+		write(tmp->in_fd, "\n", 1);
 	}
 	close (tmp->in_fd);
 	tmp->in_fd = open("/tmp/.heredoc", O_RDONLY);
