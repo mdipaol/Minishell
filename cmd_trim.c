@@ -6,7 +6,7 @@
 /*   By: alegreci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:38:36 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/05/30 16:03:32 by alegreci         ###   ########.fr       */
+/*   Updated: 2023/05/31 16:05:36 by alegreci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ static int	word_counter(char const *s, char c, int i, int flag)
 			flag = 0;
 		i++;
 	}
-	//printf("%d\n", count);
 	return (count);
 }
 
@@ -108,7 +107,7 @@ char	**ft_cmdtrim_helper(char *s, int i, int b, char **final)
 		}
 		if (s[i] == ' ')
 			flag = 0;
-		if(s[i])
+		if (s[i])
 			i++;
 	}
 	final[b] = NULL;

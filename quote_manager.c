@@ -3,14 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   quote_manager.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: alegreci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 18:38:22 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/05/24 17:55:17 by mdi-paol         ###   ########.fr       */
+/*   Updated: 2023/05/31 16:02:14 by alegreci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	ft_wcounter_helper(char c, int *flag, int count)
+{
+	if (c != '|' && c != '>' && c != '<' && *flag == 1)
+	{
+		count++;
+		*flag = 0;
+	}
+	else if (c == '|' || c == '>' || c == '<')
+	{
+		count++;
+		*flag = 1;
+	}
+	return (count);
+}
 
 int	ft_check_quote(char *s)
 {
