@@ -6,7 +6,7 @@
 /*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 18:50:56 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/05/12 16:23:35 by mdi-paol         ###   ########.fr       */
+/*   Updated: 2023/05/31 17:33:51 by mdi-paol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ char	*get_line_wow(char *tmp)
 	{
 		i++;
 	}
-	line = (char *)ft_calloc(sizeof(char) * (i + 2), 1);
+	line = (char *)ft_ccalloc(sizeof(char) * (i + 2), 1);
 	while (i >= 0)
 	{
 		line[i] = tmp[i];
@@ -64,7 +64,7 @@ char	*update_storage(char *storage)
 		free (storage);
 		return (NULL);
 	}
-	tmp = ft_calloc(sizeof (char), (ft_ssstrlen(storage) - i + 1));
+	tmp = ft_ccalloc(sizeof (char), (ft_ssstrlen(storage) - i + 1));
 	while (storage[i])
 	{
 		tmp[j] = storage[i];
@@ -83,7 +83,7 @@ char	*search_return_line(char *storage, int fd)
 	reading = 1;
 	while (!check_return_line(storage) && reading > 0)
 	{
-		buffer = (char *)ft_calloc(sizeof (char) * BUFFER_SIZE + 1, 1);
+		buffer = (char *)ft_ccalloc(sizeof (char) * BUFFER_SIZE + 1, 1);
 		reading = read (fd, buffer, BUFFER_SIZE);
 		if (reading == -1)
 		{
@@ -110,7 +110,7 @@ char	*get_next_line(int fd)
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	if (!storage)
-		storage = (char *)ft_calloc(sizeof (char), 1);
+		storage = (char *)ft_ccalloc(sizeof (char), 1);
 	storage = search_return_line(storage, fd);
 	if (!storage)
 		return (NULL);

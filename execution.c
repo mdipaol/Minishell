@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alegreci <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 16:33:32 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/05/31 15:35:59 by alegreci         ###   ########.fr       */
+/*   Updated: 2023/05/31 19:40:01 by mdi-paol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,23 +69,30 @@ void	ft_exec(t_cmd *tmp, char ***envp, t_data *data)
 	pid_t	pid;
 	int		std[2];
 	int		child_status;
+	int		j_special;
 
-	if (!tmp->full_cmd[0])
+	j_special = 0;
+	while (tmp->full_cmd[j_special] && !tmp->full_cmd[j_special][0])
+		j_special++;
+	if (!tmp->full_cmd[j_special])
 		return ;
 	if (pipe(std) == -1)
 		ft_error("Minishem: error creating pipe\n", 1);
 	ft_save_std(std, 0);
 	ft_check_redirect(tmp);
-	if (ft_is_builtin(tmp->full_cmd[0]))
-		ft_builtin(tmp, envp, data);
+	if (ft_is_builtin(tmp->full_cmd[j_special]))
+		ft_builtin(tmp, envp, data, j_special);
 	pid = fork();
 	if (pid < 0)
 		ft_error ("Minishem: fork failed\n", 1);
 	if (pid == 0)
 	{
-		if (!tmp->full_path || ft_is_builtin(tmp->full_cmd[0]))
+		if (!tmp->full_path || ft_is_builtin(tmp->full_cmd[j_special]))
+		{
+			ft_free_all(data);
 			exit(g_status);
-		execve(tmp->full_path, tmp->full_cmd, *envp);
+		}
+		execve(tmp->full_path, tmp->full_cmd + j_special, *envp);
 		exit(g_status);
 	}
 	signal(SIGINT, SIG_IGN);
@@ -104,7 +111,7 @@ void	ft_execution_manager(t_data	*data)
 {
 	t_cmd	*tmp;
 
-	if (data->pipe_stop || g_status == 2)
+	if (data->split_error || data->pipe_stop || g_status == 2)
 		return ;
 	tmp = *data->cmds;
 	while (tmp)

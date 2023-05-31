@@ -6,7 +6,7 @@
 /*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 18:51:05 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/05/12 16:23:42 by mdi-paol         ###   ########.fr       */
+/*   Updated: 2023/05/31 17:34:03 by mdi-paol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,6 @@ char	*ft_strrjoin(const char *s1, const char *s2);
 int		check_return_line(char *storage);
 char	*search_return_line(char *storage, int fd);
 void	ft_bzero(void *s, size_t n);
-void	*ft_calloc(size_t nmemb, size_t size);
+void	*ft_ccalloc(size_t nmemb, size_t size);
 
 #endif

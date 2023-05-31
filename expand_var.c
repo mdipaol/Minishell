@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_var.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alegreci <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 10:14:33 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/05/26 16:46:54 by alegreci         ###   ########.fr       */
+/*   Updated: 2023/05/31 18:41:06 by mdi-paol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ char	*ft_final_fill(char *original, char *new, int dollar, char *var)
 			flag = 1;
 		}
 	}
-	new[j] = '\0';
+	//new[j] = '\0';
 	free(original);
 	return (new);
 }
@@ -63,10 +63,11 @@ int	ft_create_str_var(t_data *data, int i, int j, int flag)
 	char	*var;
 	char	*s;
 
-	var = malloc(sizeof(char) * \
+	s = malloc(sizeof(char) * \
 	ft_strlen_var(data->cmd_trim[i] + j + 1, "|\"\'$>< ") + 1);
-	var = ft_fill_var(var, data->cmd_trim[i] + j + 1, "|\"\'$>< ");
-	var = getenv(var);
+	s = ft_fill_var(s, data->cmd_trim[i] + j + 1, "|\"\'$>< ");
+	var = getenv(s);
+	free(s);
 	if (data->cmd_trim[i][j + 1] == '?')
 	{
 		var = ft_itoa(g_status);
@@ -74,12 +75,11 @@ int	ft_create_str_var(t_data *data, int i, int j, int flag)
 	}
 	if (!var)
 	{
-		var = malloc(1);
-		var[0] = '\0';
+		var = ft_calloc(1, 1);
 		flag = 1;
 	}
-	s = malloc(sizeof(char) * ft_strlen(var) + ft_strlen(data->cmd_trim[i]) - \
-	ft_strlen_var(data->cmd_trim[i] + j + 1, "|\"\'$>< "));
+	s = ft_calloc(sizeof(char), (ft_strlen(var) + ft_strlen(data->cmd_trim[i]) - \
+	ft_strlen_var(data->cmd_trim[i] + j + 1, "|\"\'$>< ")) + 1);
 	data->cmd_trim[i] = ft_final_fill(data->cmd_trim[i], s, j, var);
 	j += ft_strlen(var) - 1;
 	if (flag)

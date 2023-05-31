@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins3.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alegreci <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 18:47:21 by alegreci          #+#    #+#             */
-/*   Updated: 2023/05/23 15:00:14 by alegreci         ###   ########.fr       */
+/*   Updated: 2023/05/31 19:32:37 by mdi-paol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,25 @@
 
 extern int	g_status;
 
-void	ft_exit(char **cmd, t_data *data)
+void	ft_exit(char **cmd, t_data *data, int j)
 {
 	int	i;
 
-	i = 0;
+	i = j;
 	while (cmd[i])
 		i++;
-	if (i == 1)
+	if (i == (j + 1))
 		ft_error(NULL, 0);
-	else if (i > 2)
+	else if (i > (j + 2))
 		ft_error("exit: too many arguments\n", 1);
-	else if (i == 2)
+	else if (i == (j + 2))
 	{
-		if (!ft_numstr(cmd[1]))
+		if (!ft_numstr(cmd[j + 1]))
 			ft_error("exit: numeric argument required\n", 2);
 		else
-			ft_error(NULL, ft_atoi(cmd[1]) % 256);
+			ft_error(NULL, ft_atoi(cmd[j + 1]) % 256);
 	}
-	if (i <= 2)
+	if (i <= (j + 2))
 		data->run = 0;
 }
 
@@ -73,12 +73,12 @@ char	**ft_unset_envp(char *full_cmd, char **envp, int j)
 	return (new_envp);
 }
 
-void	ft_unset(char **cmd, char ***envp)
+void	ft_unset(char **cmd, char ***envp, int j)
 {
 	int	i;
 
-	i = 1;
-	if (!cmd[1])
+	i = j + 1;
+	if (!cmd[j + 1])
 		return ;
 	while (cmd[i])
 	{

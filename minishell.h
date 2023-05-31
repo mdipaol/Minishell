@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alegreci <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:34:35 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/05/31 16:14:50 by alegreci         ###   ########.fr       */
+/*   Updated: 2023/05/31 19:32:57 by mdi-paol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,13 +62,13 @@ void	ft_obtain_fd(t_cmd *tmp, char *path, int flag);
 char	*ft_full_path_finder(char **full_cmd, char **path);
 void	ft_execution_manager(t_data	*data);
 int		ft_is_builtin(char *tmp);
-void	ft_builtin(t_cmd *tmp, char ***envp, t_data *data);
+void	ft_builtin(t_cmd *tmp, char ***envp, t_data *data, int j);
 int		ft_char_counter(char *s, char c);
-void	ft_cd(char **full_cmd, char **envp);
-void	ft_export(char **full_cmd, char ***envp);
-void	ft_unset(char **cmd, char ***envp);
+void	ft_cd(char **full_cmd, char **envp, int j);
+void	ft_export(char **full_cmd, char ***envp, int j);
+void	ft_unset(char **cmd, char ***envp, int j);
 void	ft_handler_sigint(int sig);
-void	ft_exit(char **cmd, t_data *data);
+void	ft_exit(char **cmd, t_data *data, int j);
 void	ft_error(char *str, int error);
 int		ft_numstr(char *str);
 void	ft_free_all(t_data *data);

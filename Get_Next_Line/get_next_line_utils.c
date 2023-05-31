@@ -6,7 +6,7 @@
 /*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 18:51:02 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/05/12 16:23:22 by mdi-paol         ###   ########.fr       */
+/*   Updated: 2023/05/31 17:33:30 by mdi-paol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ char	*ft_strrjoin(const char *s1, const char *s2)
 	return (ft_strrcat((char *)s1, (char *)s2, newstr, i));
 }
 
-void	ft_bzero(void *s, size_t n)
+void	ft_bbzero(void *s, size_t n)
 {
 	size_t	i;
 	char	*a;
@@ -75,13 +75,13 @@ void	ft_bzero(void *s, size_t n)
 	}
 }
 
-void	*ft_calloc(size_t nmemb, size_t size)
+void	*ft_ccalloc(size_t nmemb, size_t size)
 {
 	void	*a;
 
 	a = (void *)malloc(nmemb * size);
 	if (a == 0)
 		return (0);
-	ft_bzero(a, nmemb * size);
+	ft_bbzero(a, nmemb * size);
 	return (a);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_subsplit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alegreci <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 17:36:04 by marvin@42.f       #+#    #+#             */
-/*   Updated: 2023/05/31 16:04:27 by alegreci         ###   ########.fr       */
+/*   Updated: 2023/05/31 19:46:42 by mdi-paol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ char	**ft_cmdsubsplit(char **s)
 
 	i = 0;
 	j = 0;
-	final = malloc(sizeof(char *) * (ft_wcounter(s, i, j, 1) + 1));
+	final = ft_calloc(sizeof(char *), ft_wcounter(s, i, j, 1) + 2);
 	while (s[i])
 	{
 		if (!ft_strchr_quote(s[i], '|')
@@ -115,7 +115,6 @@ char	**ft_cmdsubsplit(char **s)
 			j = ft_string_splitter(final, j, s[i], 0);
 		i++;
 	}
-	final[j] = NULL;
 	free(s);
 	return (final);
 }

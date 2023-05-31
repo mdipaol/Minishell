@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alegreci <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 18:27:04 by alegreci          #+#    #+#             */
-/*   Updated: 2023/05/23 15:13:17 by alegreci         ###   ########.fr       */
+/*   Updated: 2023/05/31 19:28:39 by mdi-paol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,14 @@ char	**ft_set_export(char *cmd, char **envp, int i, int id)
 	return (new_envp);
 }
 
-void	ft_export(char **full_cmd, char ***envp)
+void	ft_export(char **full_cmd, char ***envp, int j)
 {
 	int	i;
 	int	err;
 
 	err = 0;
-	i = 1;
-	if (!full_cmd[1])
+	i = j + 1;
+	if (!full_cmd[j + 1])
 		return ;
 	while (full_cmd[i])
 	{
@@ -100,17 +100,17 @@ void	ft_chdir(char *path, char *pwd)
 		ft_error("Minishem: cd: No such file or directory\n", 1);
 }
 
-void	ft_cd(char **full_cmd, char **envp)
+void	ft_cd(char **full_cmd, char **envp, int j)
 {
 	char	*s;
 	char	*pwd;
 
 	(void)envp;
 	(void)s;
-	if (!full_cmd[1])
+	if (!full_cmd[j + 1])
 		return ;
-	s = full_cmd[1];
-	if (full_cmd[1] && full_cmd[2])
+	s = full_cmd[j + 1];
+	if (full_cmd[j + 1] && full_cmd[j + 2])
 	{
 		ft_error("Minishem: cd: Too many arguments\n", 1);
 		return ;
