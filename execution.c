@@ -6,7 +6,7 @@
 /*   By: alegreci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 16:33:32 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/05/31 15:35:59 by alegreci         ###   ########.fr       */
+/*   Updated: 2023/05/31 16:29:19 by alegreci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,10 @@ void	ft_exec(t_cmd *tmp, char ***envp, t_data *data)
 	if (pid == 0)
 	{
 		if (!tmp->full_path || ft_is_builtin(tmp->full_cmd[0]))
+		{
+			ft_free_all(data);
 			exit(g_status);
+		}
 		execve(tmp->full_path, tmp->full_cmd, *envp);
 		exit(g_status);
 	}
