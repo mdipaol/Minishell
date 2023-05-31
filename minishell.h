@@ -6,7 +6,7 @@
 /*   By: alegreci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:34:35 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/05/31 16:00:34 by alegreci         ###   ########.fr       */
+/*   Updated: 2023/05/31 16:14:50 by alegreci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,4 +77,5 @@ void	ft_free_redirect(char **full_cmd);
 char	**ft_negative_restorer(char **cmd);
 char	**ft_safe_quotes(char **cmd);
 int		ft_wcounter_helper(char c, int *flag, int count);
+int		ft_word_creator_helper(char *s, int startcpy, char c);
 #endif

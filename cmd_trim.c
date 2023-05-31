@@ -6,7 +6,7 @@
 /*   By: alegreci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:38:36 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/05/31 16:05:36 by alegreci         ###   ########.fr       */
+/*   Updated: 2023/05/31 16:18:57 by alegreci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,29 +43,13 @@ static int	word_counter(char const *s, char c, int i, int flag)
 	return (count);
 }
 
-static char	*word_creator(char *s, char c, int start)
+static char	*word_creator(char *s, char c, int startcpy)
 {
 	char	*newword;
 	int		i;
-	int		startcpy;
 	char	q;
 
-	i = 0;
-	startcpy = start;
-	while (s[start] && s[start] != c)
-	{
-		if (s[start] == '\'' || s[start] == '\"')
-		{
-			i += quote_skipper(s, start) - start;
-			start = quote_skipper(s, start);
-		}
-		else
-		{
-			i++;
-			start++;
-		}
-	}
-	newword = malloc (sizeof(char) * i + 1);
+	newword = malloc (sizeof(char) * ft_word_creator_helper(s, startcpy, c));
 	i = 0;
 	if (!newword)
 		return (NULL);

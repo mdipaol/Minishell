@@ -6,11 +6,32 @@
 /*   By: alegreci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 18:38:22 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/05/31 16:02:14 by alegreci         ###   ########.fr       */
+/*   Updated: 2023/05/31 16:19:08 by alegreci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	ft_word_creator_helper(char *s, int start, char c)
+{
+	int	i;
+
+	i = 0;
+	while (s[start] && s[start] != c)
+	{
+		if (s[start] == '\'' || s[start] == '\"')
+		{
+			i += quote_skipper(s, start) - start;
+			start = quote_skipper(s, start);
+		}
+		else
+		{
+			i++;
+			start++;
+		}
+	}
+	return (i + 1);
+}
 
 int	ft_wcounter_helper(char c, int *flag, int count)
 {
