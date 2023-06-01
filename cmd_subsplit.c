@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_subsplit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: alegreci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 17:36:04 by marvin@42.f       #+#    #+#             */
-/*   Updated: 2023/05/31 19:46:42 by mdi-paol         ###   ########.fr       */
+/*   Updated: 2023/06/01 15:28:42 by alegreci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,8 @@ int	ft_wcounter(char **s, int i, int count, int flag)
 	while (s[i])
 	{
 		j = 0;
+		if (!s[i][j])
+			count++;
 		while (s[i][j])
 		{
 			if (s[i][j] == '\"' || s[i][j] == '\'')

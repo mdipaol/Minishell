@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: alegreci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:16:21 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/05/31 17:07:01 by mdi-paol         ###   ########.fr       */
+/*   Updated: 2023/06/01 18:50:11 by alegreci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,26 @@
 
 extern int	g_status;
 
-void	ft_initialize(t_data *data)
+char	**ft_envp_init(char **envp)
+{
+	int		i;
+	char	**new;
+
+	i = 0;
+	while (envp[i])
+		i++;
+	new = malloc(sizeof(char *) * (i + 1));
+	i = 0;
+	while (envp[i])
+	{
+		new[i] = ft_strdup(envp[i]);
+		i++;
+	}
+	new[i] = NULL;
+	return (new);
+}
+
+void	ft_initialize(t_data *data, char **envp)
 {
 	/* printf("\033[0;96m███╗░░░███╗██╗███╗░░██╗██╗░░░██████╗██╗░░██╗███████╗███╗░░░███╗\n\
 ████╗░████║██║████╗░██║██║░░██╔════╝██║░░██║██╔════╝████╗░████║\n\
@@ -26,8 +45,10 @@ void	ft_initialize(t_data *data)
 	data->run = 1;
 	data->split_error = 0;
 	data->cmd_trim = NULL;
+	data->envp = ft_envp_init(envp);
 	//data->pipe_stop = 0;
 	g_status = 0;
+	data->free_envp = 0;
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -37,9 +58,8 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
-	data.envp = envp;
 	s = NULL;
-	ft_initialize(&data);
+	ft_initialize(&data, envp);
 	while (data.run)
 	{
 		signal(SIGINT, ft_handler_sigint);
@@ -55,6 +75,7 @@ int	main(int argc, char **argv, char **envp)
 			ft_free_all(&data);
 		}
 	}
+	ft_free_envp(data.envp);
 	//ft_free_all(&data);
 	write(1, "exit\n", 5);
 	exit(g_status);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: alegreci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 12:06:20 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/05/31 19:30:47 by mdi-paol         ###   ########.fr       */
+/*   Updated: 2023/06/01 19:10:31 by alegreci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	ft_builtin(t_cmd *tmp, char ***envp, t_data *data, int j)
 	else if (ft_strncmp(tmp->full_cmd[j], "pwd", 3) == 0)
 		ft_pwd();
 	else if (ft_strncmp(tmp->full_cmd[j], "export", 6) == 0)
-		ft_export(tmp->full_cmd, envp, j);
+		ft_export(tmp->full_cmd, data, j);
 	else if (ft_strncmp(tmp->full_cmd[j], "unset", 5) == 0)
 		ft_unset(tmp->full_cmd, envp, j);
 	else if (ft_strncmp(tmp->full_cmd[j], "env", 3) == 0)

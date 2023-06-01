@@ -6,7 +6,7 @@
 /*   By: alegreci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 11:34:45 by alegreci          #+#    #+#             */
-/*   Updated: 2023/05/30 15:50:58 by alegreci         ###   ########.fr       */
+/*   Updated: 2023/06/01 19:49:33 by alegreci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ char	**ft_cmd_cleaner(char **full_cmd)
 	return (new);
 }
 
-void	ft_redirection(t_cmd **head)
+void	ft_redirection(t_cmd **head, t_data *data)
 {
 	t_cmd	*tmp;
 	char	**path;
@@ -106,7 +106,7 @@ void	ft_redirection(t_cmd **head)
 
 	i = 0;
 	tmp = *head;
-	path = ft_split(getenv("PATH"), ':');
+	path = ft_extract_path(data->envp);
 	while (tmp)
 	{
 		ft_fd_manager(tmp, tmp->full_cmd);

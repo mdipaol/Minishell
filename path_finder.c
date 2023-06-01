@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path_finder.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: alegreci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 16:57:57 by alegreci          #+#    #+#             */
-/*   Updated: 2023/05/31 19:01:25 by mdi-paol         ###   ########.fr       */
+/*   Updated: 2023/06/01 17:39:25 by alegreci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	*ft_full_path_finder(char **full_cmd, char **path)
 	if (ft_strchr(full_cmd[j], '/'))
 	{
 		if (access(full_cmd[j], X_OK) == 0)
-			return (full_cmd[j]);
+			return (ft_strdup(full_cmd[j]));
 		if (access(full_cmd[j], F_OK) == -1)
 			ft_error("Minishell: No such file or directory\n", 127);
 		else if (access(full_cmd[j], X_OK) == -1)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins3.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: alegreci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 18:47:21 by alegreci          #+#    #+#             */
-/*   Updated: 2023/05/31 19:32:37 by mdi-paol         ###   ########.fr       */
+/*   Updated: 2023/06/01 20:43:28 by alegreci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ char	**ft_unset_envp(char *full_cmd, char **envp, int j)
 
 	i = 0;
 	cmd = ft_strjoin(full_cmd, "=");
-	free(full_cmd);
+/*	free(full_cmd); */
 	if (ft_check_unset(envp, i, cmd))
 		return (envp);
 	i = 0;
@@ -66,10 +66,12 @@ char	**ft_unset_envp(char *full_cmd, char **envp, int j)
 	while (envp[i])
 	{
 		if (ft_strncmp(envp[i], cmd, ft_strlen(cmd)))
-			new_envp[j++] = envp[i];
+			new_envp[j++] = ft_strdup(envp[i]);
 		i++;
 	}
 	new_envp[j] = NULL;
+	free(cmd);
+	ft_free_envp(envp);
 	return (new_envp);
 }
 

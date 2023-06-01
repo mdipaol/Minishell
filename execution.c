@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: alegreci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 16:33:32 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/06/01 11:28:38 by mdi-paol         ###   ########.fr       */
+/*   Updated: 2023/06/01 20:32:35 by alegreci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ void	ft_exec(t_cmd *tmp, char ***envp, t_data *data)
 	{
 		if (!tmp->full_path || ft_is_builtin(tmp->full_cmd[j_special]))
 		{
+			ft_free_envp(data->envp);
 			ft_free_all(data);
 			exit(g_status);
 		}

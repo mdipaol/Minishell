@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_var.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: alegreci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 10:14:33 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/05/31 18:41:06 by mdi-paol         ###   ########.fr       */
+/*   Updated: 2023/06/01 17:53:00 by alegreci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,8 @@ char	**ft_expand(t_data *data)
 				j = quote_skipper(data->cmd_trim[i], j);
 			if (data->cmd_trim[i][j] == '$' && !ft_strchr("|\"\'$>< ", data->cmd_trim[i][j + 1]))
 				j = ft_create_str_var(data, i, j, 0);
-			j++;
+			if (data->cmd_trim[i][j])
+				j++;
 		}
 		i++;
 	}

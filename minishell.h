@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: alegreci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:34:35 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/05/31 19:32:57 by mdi-paol         ###   ########.fr       */
+/*   Updated: 2023/06/01 19:49:52 by alegreci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,10 @@ typedef struct s_data
 	char	**expand;
 	char	**envp;
 	int		pipe_stop;
+	int		free_envp;
 }	t_data;
 
-void	ft_redirection(t_cmd **head);
+void	ft_redirection(t_cmd **head, t_data *data);
 t_cmd	**ft_fill_nodes(t_data *data);
 void	ft_split_all(t_data *data, char *s);
 int		quote_skipper(char *s, int start);
@@ -65,17 +66,20 @@ int		ft_is_builtin(char *tmp);
 void	ft_builtin(t_cmd *tmp, char ***envp, t_data *data, int j);
 int		ft_char_counter(char *s, char c);
 void	ft_cd(char **full_cmd, char **envp, int j);
-void	ft_export(char **full_cmd, char ***envp, int j);
+void	ft_export(char **full_cmd, t_data *data, int j);
 void	ft_unset(char **cmd, char ***envp, int j);
 void	ft_handler_sigint(int sig);
 void	ft_exit(char **cmd, t_data *data, int j);
 void	ft_error(char *str, int error);
 int		ft_numstr(char *str);
+char	**ft_extract_path(char **envp);
 void	ft_free_all(t_data *data);
 t_cmd	*ft_free_nodes(t_cmd *cmd);
 void	ft_free_redirect(char **full_cmd);
 char	**ft_negative_restorer(char **cmd);
 char	**ft_safe_quotes(char **cmd);
 int		ft_wcounter_helper(char c, int *flag, int count);
+void	ft_free_envp(char **envp);
+char	**ft_envp_init(char **envp);
 int		ft_word_creator_helper(char *s, int startcpy, char c);
 #endif

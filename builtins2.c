@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: alegreci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 18:27:04 by alegreci          #+#    #+#             */
-/*   Updated: 2023/05/31 19:28:39 by mdi-paol         ###   ########.fr       */
+/*   Updated: 2023/06/01 20:52:47 by alegreci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ char	**ft_set_export(char *cmd, char **envp, int i, int id)
 	{
 		if (!ft_strncmp(cmd, envp[i], id + 1))
 		{
+ 			free(envp[i]);
 			envp[i] = ft_strdup(cmd);
 			return (envp);
 		}
@@ -35,15 +36,16 @@ char	**ft_set_export(char *cmd, char **envp, int i, int id)
 	i = 0;
 	while (envp[i])
 	{
-		new_envp[i] = envp[i];
+		new_envp[i] = ft_strdup(envp[i]);
 		i++;
 	}
 	new_envp[i++] = ft_strdup(cmd);
 	new_envp[i] = NULL;
+	ft_free_envp(envp);
 	return (new_envp);
 }
 
-void	ft_export(char **full_cmd, char ***envp, int j)
+void	ft_export(char **full_cmd, t_data *data, int j)
 {
 	int	i;
 	int	err;
@@ -62,7 +64,7 @@ void	ft_export(char **full_cmd, char ***envp, int j)
 				err = 1;
 			}
 			else
-				*envp = ft_set_export(full_cmd[i], *envp, i, 0);
+				data->envp = ft_set_export(full_cmd[i], data->envp, i, 0);
 		}
 		i++;
 	}
@@ -81,12 +83,20 @@ void	ft_set_env(char *old_pwd, char **envp)
 	while (envp[i])
 	{
 		if (!ft_strncmp(envp[i], "PWD=", 4))
+		{
+			free(envp[i]);
 			envp[i] = ft_strjoin("PWD=", pwd);
+		}
 		else if (!ft_strncmp(envp[i], "OLDPWD=", 7))
+		{
+			free(envp[i]);
 			envp[i] = ft_strjoin("OLDPWD=", old_pwd);
+		}
 		i++;
 	}
+	free(pwd);
 }
+
 
 void	ft_chdir(char *path, char *pwd)
 {
@@ -98,6 +108,7 @@ void	ft_chdir(char *path, char *pwd)
 	}
 	if (chdir(path) == -1)
 		ft_error("Minishem: cd: No such file or directory\n", 1);
+	free(path);
 }
 
 void	ft_cd(char **full_cmd, char **envp, int j)

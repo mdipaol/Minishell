@@ -6,25 +6,23 @@
 /*   By: alegreci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 18:53:47 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/05/31 15:45:36 by alegreci         ###   ########.fr       */
+/*   Updated: 2023/06/01 20:12:56 by alegreci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_free_all_2(t_data *data)
+void	ft_free_envp(char **envp)
 {
-	(void)data;
-/* 	int	i;
+	int	i;
 
 	i = 0;
-	while (data->cmd_trim[i])
+	while (envp[i])
 	{
-		free(data->cmd_trim[i]);
+		free(envp[i]);
 		i++;
-	} */
-/* 	if (data->cmd_trim)
-		free(data->cmd_trim); */
+	}
+	free(envp);
 }
 
 void	ft_free_all(t_data *data)

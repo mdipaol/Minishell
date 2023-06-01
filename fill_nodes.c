@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_nodes.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: alegreci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 16:22:15 by alegreci          #+#    #+#             */
-/*   Updated: 2023/05/25 16:43:49 by mdi-paol         ###   ########.fr       */
+/*   Updated: 2023/06/01 19:45:56 by alegreci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ int	ft_count_nodes(char **s, t_data *data)
 		}
 		i++;
 	}
-	if (s[0][0] == '|')
+	if (s[0] && s[0][0] == '|')
 		data->pipe_stop = 1;
 	return (count);
 }
@@ -128,7 +128,7 @@ t_cmd	**ft_fill_nodes(t_data *data)
 	ft_all_cmd_init(all_cmd, cmd_n, data->cmd_trim);
 	all_cmd = ft_fill_all_cmd(all_cmd, cmd_n, data->cmd_trim);
 	ft_node_init(head, cmd_n, all_cmd);
-	ft_redirection(head);
+	ft_redirection(head, data);
 	free (all_cmd);
 	return (head);
 }
