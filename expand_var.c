@@ -6,13 +6,21 @@
 /*   By: alegreci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 10:14:33 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/06/05 15:03:14 by alegreci         ###   ########.fr       */
+/*   Updated: 2023/06/05 16:12:45 by alegreci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 extern int	g_status;
+
+int	ft_no_neg(int j, int flag)
+{
+	if (flag)
+		return (j + 1);
+	else
+		return (j);
+}
 
 char	*ft_fill_var(char *var, char *s, char *check)
 {
@@ -83,7 +91,7 @@ int	ft_create_str_var(t_data *data, int i, int j, int flag)
 	j += ft_strlen(var) - 1;
 	if (flag)
 		free(var);
-	return (j);
+	return (ft_no_neg(j, flag));
 }
 
 char	**ft_expand(t_data *data)
@@ -105,7 +113,7 @@ char	**ft_expand(t_data *data)
 			if (data->cmd_trim[i][j] == '$' && \
 			!ft_strchr("|\"\'$>< ", data->cmd_trim[i][j + 1]))
 				j = ft_create_str_var(data, i, j, 0);
-			if (data->cmd_trim[i][j])
+			if (data->cmd_trim[i][j] && data->cmd_trim[i][j] != '$')
 				j++;
 		}
 		i++;
