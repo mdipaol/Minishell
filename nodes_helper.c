@@ -6,7 +6,7 @@
 /*   By: alegreci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 11:34:45 by alegreci          #+#    #+#             */
-/*   Updated: 2023/06/01 19:49:33 by alegreci         ###   ########.fr       */
+/*   Updated: 2023/06/05 15:13:42 by alegreci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,14 +66,10 @@ void	ft_get_fd(t_cmd *tmp, char **full_cmd, int flag)
 	ft_obtain_fd(tmp, path, flag);
 }
 
-char	**ft_cmd_cleaner(char **full_cmd)
+char	**ft_cmd_cleaner(char **full_cmd, int i, int j)
 {
 	char	**new;
-	int		i;
-	int		j;
 
-	i = 0;
-	j = 0;
 	j = ft_cmd_clean_counter(full_cmd, i, j);
 	new = malloc(sizeof(char *) * (j + 1));
 	new[j] = NULL;
@@ -110,7 +106,7 @@ void	ft_redirection(t_cmd **head, t_data *data)
 	while (tmp)
 	{
 		ft_fd_manager(tmp, tmp->full_cmd);
-		tmp->full_cmd = ft_cmd_cleaner(tmp->full_cmd);
+		tmp->full_cmd = ft_cmd_cleaner(tmp->full_cmd, 0, 0);
 		tmp->full_cmd = ft_negative_restorer(tmp->full_cmd);
 		tmp->full_path = ft_full_path_finder(tmp->full_cmd, path);
 		tmp = tmp->next;

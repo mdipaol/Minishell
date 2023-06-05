@@ -6,7 +6,7 @@
 /*   By: alegreci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 18:27:04 by alegreci          #+#    #+#             */
-/*   Updated: 2023/06/01 20:52:47 by alegreci         ###   ########.fr       */
+/*   Updated: 2023/06/05 14:40:28 by alegreci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,23 +26,14 @@ char	**ft_set_export(char *cmd, char **envp, int i, int id)
 	{
 		if (!ft_strncmp(cmd, envp[i], id + 1))
 		{
- 			free(envp[i]);
+			free(envp[i]);
 			envp[i] = ft_strdup(cmd);
 			return (envp);
 		}
 		i++;
 	}
 	new_envp = malloc(sizeof(char *) * (i + 2));
-	i = 0;
-	while (envp[i])
-	{
-		new_envp[i] = ft_strdup(envp[i]);
-		i++;
-	}
-	new_envp[i++] = ft_strdup(cmd);
-	new_envp[i] = NULL;
-	ft_free_envp(envp);
-	return (new_envp);
+	return (ft_set_ex_helper(envp, new_envp, cmd));
 }
 
 void	ft_export(char **full_cmd, t_data *data, int j)
@@ -96,7 +87,6 @@ void	ft_set_env(char *old_pwd, char **envp)
 	}
 	free(pwd);
 }
-
 
 void	ft_chdir(char *path, char *pwd)
 {

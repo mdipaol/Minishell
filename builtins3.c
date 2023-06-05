@@ -6,13 +6,29 @@
 /*   By: alegreci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 18:47:21 by alegreci          #+#    #+#             */
-/*   Updated: 2023/06/01 20:43:28 by alegreci         ###   ########.fr       */
+/*   Updated: 2023/06/05 14:39:38 by alegreci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 extern int	g_status;
+
+char	**ft_set_ex_helper(char **envp, char **new_envp, char *cmd)
+{
+	int	i;
+
+	i = 0;
+	while (envp[i])
+	{
+		new_envp[i] = ft_strdup(envp[i]);
+		i++;
+	}
+	new_envp[i++] = ft_strdup(cmd);
+	new_envp[i] = NULL;
+	ft_free_envp(envp);
+	return (new_envp);
+}
 
 void	ft_exit(char **cmd, t_data *data, int j)
 {
@@ -55,7 +71,6 @@ char	**ft_unset_envp(char *full_cmd, char **envp, int j)
 
 	i = 0;
 	cmd = ft_strjoin(full_cmd, "=");
-/*	free(full_cmd); */
 	if (ft_check_unset(envp, i, cmd))
 		return (envp);
 	i = 0;

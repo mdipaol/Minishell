@@ -6,7 +6,7 @@
 /*   By: alegreci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 17:11:16 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/05/30 16:32:51 by alegreci         ###   ########.fr       */
+/*   Updated: 2023/06/05 15:06:26 by alegreci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,18 @@
 
 extern int	g_status;
 
+void	ft_heredoc_helper(t_cmd *tmp)
+{
+	if (g_status == 130)
+	{
+		close (tmp->in_fd);
+		tmp->in_fd = -1;
+	}
+}
+
 void	ft_heredoc(t_cmd *tmp, char *path)
 {
 	char	*std_in;
-	//int		i;
 	int		flag;
 
 	g_status = 0;
@@ -33,8 +41,6 @@ void	ft_heredoc(t_cmd *tmp, char *path)
 			break ;
 		}
 		flag++;
-		//i = ft_strlen(std_in);
-		//std_in[i] = '\n';
 		if (!ft_strncmp(path, std_in, ft_strlen(path) + 1))
 			break ;
 		write(tmp->in_fd, std_in, ft_strlen(std_in));
@@ -42,11 +48,7 @@ void	ft_heredoc(t_cmd *tmp, char *path)
 	}
 	close (tmp->in_fd);
 	tmp->in_fd = open("/tmp/.heredoc", O_RDONLY);
-	if (g_status == 130)
-	{
-		close (tmp->in_fd);
-		tmp->in_fd = -1;
-	}
+	ft_heredoc_helper(tmp);
 }
 
 char	*ft_obtain_path(char **full_cmd, int flag)

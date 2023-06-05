@@ -6,7 +6,7 @@
 /*   By: alegreci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:16:21 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/06/01 18:50:11 by alegreci         ###   ########.fr       */
+/*   Updated: 2023/06/05 15:21:27 by alegreci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ void	ft_initialize(t_data *data, char **envp)
 	data->split_error = 0;
 	data->cmd_trim = NULL;
 	data->envp = ft_envp_init(envp);
-	//data->pipe_stop = 0;
 	g_status = 0;
 	data->free_envp = 0;
 }
@@ -76,7 +75,6 @@ int	main(int argc, char **argv, char **envp)
 		}
 	}
 	ft_free_envp(data.envp);
-	//ft_free_all(&data);
 	write(1, "exit\n", 5);
 	exit(g_status);
 }

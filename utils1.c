@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils1.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdi-paol <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: alegreci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 17:31:34 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/05/22 18:54:00 by mdi-paol         ###   ########.fr       */
+/*   Updated: 2023/06/05 15:20:12 by alegreci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ int	ft_strlen_var(char *s, char *check)
 void	ft_error(char *str, int error)
 {
 	g_status = error;
-
 	if (str)
 		write(2, str, ft_strlen(str));
 }

@@ -6,30 +6,13 @@
 /*   By: alegreci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 16:33:32 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/06/01 20:32:35 by alegreci         ###   ########.fr       */
+/*   Updated: 2023/06/05 15:02:08 by alegreci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 extern int	g_status;
-
-void	ft_save_std(int *std, int flag)
-{
-	if (flag)
-	{
-		dup2(std[0], STDIN_FILENO);
-		dup2(std[1], STDOUT_FILENO);
-		close(std[0]);
-		close(std[1]);
-	}
-	else
-	{
-		dup2(STDIN_FILENO, std[0]);
-		dup2(STDOUT_FILENO, std[1]);
-
-	}
-}
 
 void	ft_check_redirect(t_cmd *tmp)
 {
@@ -68,7 +51,6 @@ void	ft_exec(t_cmd *tmp, char ***envp, t_data *data)
 {
 	pid_t	pid;
 	int		std[2];
-	int		child_status;
 	int		j_special;
 
 	j_special = 0;
@@ -86,26 +68,8 @@ void	ft_exec(t_cmd *tmp, char ***envp, t_data *data)
 	if (pid < 0)
 		ft_error ("Minishem: fork failed\n", 1);
 	if (pid == 0)
-	{
-		if (!tmp->full_path || ft_is_builtin(tmp->full_cmd[j_special]))
-		{
-			ft_free_envp(data->envp);
-			ft_free_all(data);
-			exit(g_status);
-		}
-		execve(tmp->full_path, tmp->full_cmd + j_special, *envp);
-		exit(g_status);
-	}
-	signal(SIGINT, SIG_IGN);
-	signal(SIGQUIT, SIG_IGN);
-	ft_save_std(std, 1);
-	if (tmp->out_fd != 1)
-		close(tmp->out_fd);
-	if (tmp->in_fd != 0)
-		close(tmp->in_fd);
-	waitpid(pid, &child_status, 0);
-	if (WIFEXITED(child_status))
-		g_status = WEXITSTATUS(child_status);
+		ft_child(data, tmp, j_special, envp);
+	ft_parent(std, tmp, pid);
 }
 
 void	ft_execution_manager(t_data	*data)
@@ -124,7 +88,5 @@ void	ft_execution_manager(t_data	*data)
 			ft_exec(tmp, &data->envp, data);
 		}
 		tmp = tmp->next;
-		//tmp = ft_free_nodes(tmp);
 	}
-
 }

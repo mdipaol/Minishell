@@ -6,14 +6,14 @@
 #    By: alegreci <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/17 13:45:50 by mdi-paol          #+#    #+#              #
-#    Updated: 2023/05/26 15:07:04 by alegreci         ###   ########.fr        #
+#    Updated: 2023/06/05 14:54:28 by alegreci         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 LIBFT = libft/libft.a
 GNL = Get_Next_Line/get_next_line.c Get_Next_Line/get_next_line_utils.c
-SRC = main.c cmd_trim.c quote_manager.c expand_var.c utils1.c cmd_subsplit.c trims_helpers.c quote_split.c builtins3.c fill_nodes.c path_finder.c nodes_helper.c fd_manager.c execution.c builtins.c builtins2.c signal.c free.c
+SRC = main.c cmd_trim.c quote_manager.c expand_var.c utils1.c cmd_subsplit.c trims_helpers.c quote_split.c builtins3.c fill_nodes.c path_finder.c nodes_helper.c fd_manager.c execution.c builtins.c builtins2.c signal.c free.c execution_helper.c
 FLAGS = -Wall -Werror -Wextra -g
 
 all : $(NAME)

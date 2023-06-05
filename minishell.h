@@ -6,7 +6,7 @@
 /*   By: alegreci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:34:35 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/06/01 19:49:52 by alegreci         ###   ########.fr       */
+/*   Updated: 2023/06/05 15:02:32 by alegreci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,4 +82,9 @@ int		ft_wcounter_helper(char c, int *flag, int count);
 void	ft_free_envp(char **envp);
 char	**ft_envp_init(char **envp);
 int		ft_word_creator_helper(char *s, int startcpy, char c);
+char	**ft_set_ex_helper(char **envp, char **new_envp, char *cmd);
+void	ft_child(t_data *data, t_cmd *tmp, int j_special, char ***envp);
+void	ft_parent(int *std, t_cmd *tmp, int pid);
+void	ft_save_std(int *std, int flag);
+
 #endif

@@ -6,7 +6,7 @@
 /*   By: alegreci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 18:53:47 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/06/01 20:12:56 by alegreci         ###   ########.fr       */
+/*   Updated: 2023/06/05 15:11:08 by alegreci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,6 @@ void	ft_free_all(t_data *data)
 		free(tmp);
 		tmp = tmp2;
 	}
-
-/* 	ft_free_all_2(data); */
-	//if (data->cmds)
 	free (data->cmds);
 	unlink("/tmp/.heredoc");
 }

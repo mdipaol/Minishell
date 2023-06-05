@@ -6,7 +6,7 @@
 /*   By: alegreci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 16:22:15 by alegreci          #+#    #+#             */
-/*   Updated: 2023/06/01 19:45:56 by alegreci         ###   ########.fr       */
+/*   Updated: 2023/06/05 15:10:56 by alegreci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ char	***ft_fill_all_cmd(char ***all, int n, char **trim)
 	j = 0;
 	while (i < n)
 	{
-
 		k = 0;
 		while (trim[j] && ft_strncmp(trim[j], "|", 2))
 		{
@@ -69,7 +68,7 @@ void	ft_node_init(t_cmd **head, int n, char ***all_cmd)
 
 	i = 1;
 	*head = malloc(sizeof(t_cmd));
- 	tmp = *head;
+	tmp = *head;
 	tmp->in_fd = 0;
 	tmp->out_fd = 1;
 	tmp->full_cmd = all_cmd[0];
@@ -84,7 +83,6 @@ void	ft_node_init(t_cmd **head, int n, char ***all_cmd)
 		tmp->next = NULL;
 		i++;
 	}
-	/* *head = tmp; */
 }
 
 int	ft_count_nodes(char **s, t_data *data)
@@ -101,7 +99,8 @@ int	ft_count_nodes(char **s, t_data *data)
 	{
 		if (!ft_strncmp(s[i], "|", 2))
 		{
-			if ((!s[i + 1] || !ft_strncmp(s[i + 1], "|", 2) || s[0][0] == '|') && !flag)
+			if ((!s[i + 1] || !ft_strncmp(s[i + 1], "|", 2) \
+			|| s[0][0] == '|') && !flag)
 			{
 				ft_error(\
 				"Minishem: syntax error near unexpected token '|'\n", 1);
@@ -111,8 +110,6 @@ int	ft_count_nodes(char **s, t_data *data)
 		}
 		i++;
 	}
-	if (s[0] && s[0][0] == '|')
-		data->pipe_stop = 1;
 	return (count);
 }
 
@@ -124,6 +121,8 @@ t_cmd	**ft_fill_nodes(t_data *data)
 
 	head = malloc(sizeof(t_cmd *));
 	cmd_n = ft_count_nodes(data->cmd_trim, data);
+	if (data->cmd_trim[0] && data->cmd_trim[0][0] == '|')
+		data->pipe_stop = 1;
 	all_cmd = malloc(sizeof(char **) * (cmd_n + 1));
 	ft_all_cmd_init(all_cmd, cmd_n, data->cmd_trim);
 	all_cmd = ft_fill_all_cmd(all_cmd, cmd_n, data->cmd_trim);

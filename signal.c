@@ -6,7 +6,7 @@
 /*   By: alegreci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 11:08:32 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/05/23 11:52:07 by alegreci         ###   ########.fr       */
+/*   Updated: 2023/06/05 15:19:53 by alegreci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,5 @@ void	ft_handler_sigint(int sig)
 		ioctl(STDIN_FILENO, TIOCSTI, "\n");
 		rl_replace_line("", 0);
 		rl_on_new_line();
-
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: alegreci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 10:14:33 by mdi-paol          #+#    #+#             */
-/*   Updated: 2023/06/01 17:53:00 by alegreci         ###   ########.fr       */
+/*   Updated: 2023/06/05 15:03:14 by alegreci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ char	*ft_final_fill(char *original, char *new, int dollar, char *var)
 			flag = 1;
 		}
 	}
-	//new[j] = '\0';
 	free(original);
 	return (new);
 }
@@ -78,8 +77,8 @@ int	ft_create_str_var(t_data *data, int i, int j, int flag)
 		var = ft_calloc(1, 1);
 		flag = 1;
 	}
-	s = ft_calloc(sizeof(char), (ft_strlen(var) + ft_strlen(data->cmd_trim[i]) - \
-	ft_strlen_var(data->cmd_trim[i] + j + 1, "|\"\'$>< ")) + 1);
+	s = ft_calloc(sizeof(char), (ft_strlen(var) + ft_strlen(data->cmd_trim[i]) \
+	- ft_strlen_var(data->cmd_trim[i] + j + 1, "|\"\'$>< ")) + 1);
 	data->cmd_trim[i] = ft_final_fill(data->cmd_trim[i], s, j, var);
 	j += ft_strlen(var) - 1;
 	if (flag)
@@ -103,7 +102,8 @@ char	**ft_expand(t_data *data)
 		{
 			if (data->cmd_trim[i][j] == '\'')
 				j = quote_skipper(data->cmd_trim[i], j);
-			if (data->cmd_trim[i][j] == '$' && !ft_strchr("|\"\'$>< ", data->cmd_trim[i][j + 1]))
+			if (data->cmd_trim[i][j] == '$' && \
+			!ft_strchr("|\"\'$>< ", data->cmd_trim[i][j + 1]))
 				j = ft_create_str_var(data, i, j, 0);
 			if (data->cmd_trim[i][j])
 				j++;
